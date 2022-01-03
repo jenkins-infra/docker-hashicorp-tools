@@ -1,0 +1,37 @@
+title: Bump packer docker image version
+sources:
+  latestRelease:
+    name: Get latest hashicorp/packer version
+    kind: githubRelease
+    spec:
+      owner: "hashicorp"
+      repository: "packer"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        # retrieve the latest version as semver (without 'v' prefix)
+        kind: semver
+conditions:
+  checkDockerImagePublished:
+    name: "Is latest hashicorp/packer docker image published"
+    kind: dockerImage
+    spec:
+      image: "hashicorp/packer"
+targets:
+  updateReleaseInDockerfile:
+    name: "Update the version of packer in the Dockerfile"
+    kind: dockerfile
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "PACKER_VERSION"
+    scm:
+      github:
+        user: "{{ .github.user }}"
+        email: "{{ .github.email }}"
+        owner: "{{ .github.owner }}"
+        repository: "{{ .github.repository }}"
+        token: "{{ requiredEnv .github.token }}"
+        username: "{{ .github.username }}"
+        branch: "{{ .github.branch }}"

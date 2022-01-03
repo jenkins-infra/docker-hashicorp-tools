@@ -4,13 +4,21 @@
 ARG GO_VERSION=1.17.5
 FROM golang:"${GO_VERSION}-alpine" as gosource
 
+ARG PACKER_VERSION=1.7.4
+FROM hashicorp/packer:"${PACKER_VERSION}" as packersource
+
 FROM jenkins/inbound-agent:4.11-1-alpine-jdk11
 USER root
 
 COPY --from=gosource /usr/local/go/ /usr/local/go/
+# Configure Go
+ENV PATH /usr/local/go/:$PATH
+
+COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.17.5
+ARG PACKER_VERSION=1.7.4
 
 RUN apk add --no-cache \
   # To allow easier CLI completion + running shell scripts with array support
@@ -59,10 +67,11 @@ RUN curl --silent --show-error --location --fail \
 
 USER jenkins
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,golangci-lint,aws-cli"
+LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
+LABEL io.jenkins-infra.tools.packer="${PACKER_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 
