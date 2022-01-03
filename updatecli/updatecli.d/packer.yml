@@ -35,3 +35,18 @@ targets:
         token: "{{ requiredEnv .github.token }}"
         username: "{{ .github.username }}"
         branch: "{{ .github.branch }}"
+  updateCst:
+    name: "Update the version of packer in the test harness"
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[6].value"
+    scm:
+      github:
+        user: "{{ .github.user }}"
+        email: "{{ .github.email }}"
+        owner: "{{ .github.owner }}"
+        repository: "{{ .github.repository }}"
+        token: "{{ requiredEnv .github.token }}"
+        username: "{{ .github.username }}"
+        branch: "{{ .github.branch }}"
