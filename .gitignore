@@ -1,0 +1,5 @@
+*.tar
+hadolint.json
+Makefile
+cst-result.xml
+.docker_temp*
