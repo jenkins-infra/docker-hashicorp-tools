@@ -2,9 +2,8 @@
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.17.5
-FROM golang:"${GO_VERSION}-alpine" as gosource
-
 ARG PACKER_VERSION=1.7.4
+FROM golang:"${GO_VERSION}-alpine" as gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" as packersource
 
 FROM jenkins/inbound-agent:4.11-1-alpine-jdk11
