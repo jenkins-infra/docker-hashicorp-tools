@@ -2,7 +2,7 @@
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.17.5
-ARG PACKER_VERSION=1.7.4
+ARG PACKER_VERSION=1.7.8
 FROM golang:"${GO_VERSION}-alpine" as gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" as packersource
 
@@ -17,7 +17,7 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.17.5
-ARG PACKER_VERSION=1.7.4
+ARG PACKER_VERSION=1.7.8
 
 RUN apk add --no-cache \
   # To allow easier CLI completion + running shell scripts with array support
