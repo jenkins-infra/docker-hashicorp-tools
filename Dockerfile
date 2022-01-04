@@ -11,7 +11,7 @@ USER root
 
 COPY --from=gosource /usr/local/go/ /usr/local/go/
 # Configure Go
-ENV PATH /usr/local/go/:$PATH
+ENV PATH /usr/local/go/bin/:$PATH
 
 COPY --from=packersource /bin/packer /usr/local/bin/
 
@@ -62,7 +62,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
 ARG GOLANGCILINT_VERSION=1.43.0
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
-  | sh -s -- -b "$(go env GOPATH)/bin" "v${GOLANGCILINT_VERSION}"
+  | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
 
 USER jenkins
 
@@ -74,6 +74,10 @@ LABEL io.jenkins-infra.tools.packer="${PACKER_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 
-WORKDIR /app
+# WORKDIR /app
 
-CMD ["/bin/bash"]
+# CMD ["/bin/bash"]
+
+# WORKDIR /home/jenkins
+
+# ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
