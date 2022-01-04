@@ -1,0 +1,69 @@
+---
+title: "Bump terraform version"
+sources:
+  getTerraformVersion:
+    kind: githubRelease
+    name: Get the latest Terraform version
+    spec:
+      owner: "hashicorp"
+      repository: "terraform"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        kind: regex
+        pattern: '1.0.(\d*)'
+    transformers:
+      - trimPrefix: "v"
+conditions:
+  testDockerfileArgTerraformVersion:
+    name: "Does the Dockerfile have an ARG instruction which key is TERRAFORM_VERSION?"
+    kind: dockerfile
+    disablesourceinput: true
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "TERRAFORM_VERSION"
+  testCstTerraformVersion:
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.terraform.version?"
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[1].key"
+      value: io.jenkins-infra.tools.terraform.version
+targets:
+  updateCstTerraformVersion:
+    name: "Update the label io.jenkins-infra.tools.terraform.version in the test harness"
+    sourceID: getTerraformVersion
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[1].value"
+    scm:
+      github:
+        user: "{{ .github.user }}"
+        email: "{{ .github.email }}"
+        owner: "{{ .github.owner }}"
+        repository: "{{ .github.repository }}"
+        token: "{{ requiredEnv .github.token }}"
+        username: "{{ .github.username }}"
+        branch: "{{ .github.branch }}"
+  updateDockerfileArgTerraformVersion:
+    name: "Update the value of ARG TERRAFORM_VERSION in the Dockerfile"
+    sourceID: getTerraformVersion
+    kind: dockerfile
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "TERRAFORM_VERSION"
+    scm:
+      github:
+        user: "{{ .github.user }}"
+        email: "{{ .github.email }}"
+        owner: "{{ .github.owner }}"
+        repository: "{{ .github.repository }}"
+        token: "{{ requiredEnv .github.token }}"
+        username: "{{ .github.username }}"
+        branch: "{{ .github.branch }}"

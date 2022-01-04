@@ -1,0 +1,1 @@
+parallelDockerUpdatecli([imageName: 'hashicorp-tools', rebuildImageOnPeriodicJob: false])

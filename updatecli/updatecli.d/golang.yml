@@ -1,0 +1,69 @@
+---
+title: "Bump golang version"
+sources:
+  getGolangVersion:
+    kind: githubRelease
+    name: Get the latest Golang version
+    spec:
+      owner: "golang"
+      repository: "go"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        kind: regex
+        pattern: 'go1.17.(\d*)'
+    transformers:
+      - trimPrefix: "go"
+conditions:
+  testDockerfileArgGoVersion:
+    name: "Does the Dockerfile have an ARG instruction which key is GO_VERSION?"
+    kind: dockerfile
+    disablesourceinput: true
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "GO_VERSION"
+  testCstGolangVersion:
+    name: "Does the test harness checks for a label label io.jenkins-infra.tools.golang.version?"
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[2].key"
+      value: io.jenkins-infra.tools.golang.version
+targets:
+  updateCstGoVersion:
+    name: "Update the label io.jenkins-infra.tools.golang.version in the test harness"
+    sourceID: getGolangVersion
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[2].value"
+    scm:
+      github:
+        user: "{{ .github.user }}"
+        email: "{{ .github.email }}"
+        owner: "{{ .github.owner }}"
+        repository: "{{ .github.repository }}"
+        token: "{{ requiredEnv .github.token }}"
+        username: "{{ .github.username }}"
+        branch: "{{ .github.branch }}"
+  updateDockerfileArgGoVersion:
+    name: "Update the value of ARG GO_VERSION in the Dockerfile"
+    sourceID: getGolangVersion
+    kind: dockerfile
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "GO_VERSION"
+    scm:
+      github:
+        user: "{{ .github.user }}"
+        email: "{{ .github.email }}"
+        owner: "{{ .github.owner }}"
+        repository: "{{ .github.repository }}"
+        token: "{{ requiredEnv .github.token }}"
+        username: "{{ .github.username }}"
+        branch: "{{ .github.branch }}"

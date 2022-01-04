@@ -1,0 +1,10 @@
+= Docker Image with Hashicorp tools
+
+This repository hosts the resources to build a Docker Image used for Terraform and Packer operations on the Jenkins Infrastructure.
+
+Its goal is to provide a reproducible environment to not only run a controlled version of Terraform or Packer, but also to run infrastructure tests around terraform.
+
+== Contribute
+
+If you want to contribute, or build/test the Docker Image, please refer to the following documentation about Docker images for the Jenkins Infra project:
+link:https://github.com/jenkins-infra/pipeline-library/blob/master/resources/io/jenkins/infra/docker/README.adoc[README]
