@@ -1,5 +1,18 @@
 ---
 title: "Bump terraform version"
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: "{{ .github.branch }}"
+
 sources:
   getTerraformVersion:
     kind: githubRelease
@@ -11,9 +24,11 @@ sources:
       username: "{{ .github.username }}"
       versionFilter:
         kind: regex
-        pattern: '1.0.(\d*)'
+        # Stick to versions 1.0.x of terraform
+        pattern: 'v1\.0\.(\d*)$'
     transformers:
       - trimPrefix: "v"
+
 conditions:
   testDockerfileArgTerraformVersion:
     name: "Does the Dockerfile have an ARG instruction which key is TERRAFORM_VERSION?"
@@ -32,24 +47,17 @@ conditions:
       file: "cst.yml"
       key: "metadataTest.labels[1].key"
       value: io.jenkins-infra.tools.terraform.version
+
 targets:
-  updateCstTerraformVersion:
+  updateCstVersion:
     name: "Update the label io.jenkins-infra.tools.terraform.version in the test harness"
     sourceID: getTerraformVersion
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[1].value"
-    scm:
-      github:
-        user: "{{ .github.user }}"
-        email: "{{ .github.email }}"
-        owner: "{{ .github.owner }}"
-        repository: "{{ .github.repository }}"
-        token: "{{ requiredEnv .github.token }}"
-        username: "{{ .github.username }}"
-        branch: "{{ .github.branch }}"
-  updateDockerfileArgTerraformVersion:
+    scmID: default
+  updateDockerfileArgVersion:
     name: "Update the value of ARG TERRAFORM_VERSION in the Dockerfile"
     sourceID: getTerraformVersion
     kind: dockerfile
@@ -58,12 +66,15 @@ targets:
       instruction:
         keyword: "ARG"
         matcher: "TERRAFORM_VERSION"
-    scm:
-      github:
-        user: "{{ .github.user }}"
-        email: "{{ .github.email }}"
-        owner: "{{ .github.owner }}"
-        repository: "{{ .github.repository }}"
-        token: "{{ requiredEnv .github.token }}"
-        username: "{{ .github.username }}"
-        branch: "{{ .github.branch }}"
+    scmID: default
+
+pullrequests:
+  default:
+    kind: github
+    scmID: default
+    targets:
+      - updateCstVersion
+      - updateDockerfileArgVersion
+    spec:
+      labels:
+        - dependencies

@@ -1,4 +1,18 @@
+---
 title: Bump packer docker image version
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: "{{ .github.branch }}"
+
 sources:
   latestRelease:
     name: Get latest hashicorp/packer version
@@ -11,14 +25,18 @@ sources:
       versionFilter:
         # retrieve the latest version as semver (without 'v' prefix)
         kind: semver
+
 conditions:
   checkDockerImagePublished:
-    name: "Is latest hashicorp/packer docker image published"
+    name: "Is latest hashicorp/packer docker image published?"
     kind: dockerImage
+    sourceID: latestRelease
     spec:
       image: "hashicorp/packer"
+      ## tag comes from the source
+
 targets:
-  updateReleaseInDockerfile:
+  updateDockerfileArgVersion:
     name: "Update the version of packer in the Dockerfile"
     kind: dockerfile
     spec:
@@ -26,27 +44,22 @@ targets:
       instruction:
         keyword: "ARG"
         matcher: "PACKER_VERSION"
-    scm:
-      github:
-        user: "{{ .github.user }}"
-        email: "{{ .github.email }}"
-        owner: "{{ .github.owner }}"
-        repository: "{{ .github.repository }}"
-        token: "{{ requiredEnv .github.token }}"
-        username: "{{ .github.username }}"
-        branch: "{{ .github.branch }}"
-  updateCst:
+    scmID: default
+  updateCstVersion:
     name: "Update the version of packer in the test harness"
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[6].value"
-    scm:
-      github:
-        user: "{{ .github.user }}"
-        email: "{{ .github.email }}"
-        owner: "{{ .github.owner }}"
-        repository: "{{ .github.repository }}"
-        token: "{{ requiredEnv .github.token }}"
-        username: "{{ .github.username }}"
-        branch: "{{ .github.branch }}"
+    scmID: default
+
+pullrequests:
+  default:
+    kind: github
+    scmID: default
+    targets:
+      - updateCstVersion
+      - updateDockerfileArgVersion
+    spec:
+      labels:
+        - dependencies
