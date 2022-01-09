@@ -1,7 +1,7 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.17.5
+ARG GO_VERSION=1.17.6
 ARG PACKER_VERSION=1.7.8
 FROM golang:"${GO_VERSION}-alpine" as gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" as packersource
@@ -16,7 +16,7 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.17.5
+ARG GO_VERSION=1.17.6
 ARG PACKER_VERSION=1.7.8
 
 RUN apk add --no-cache \
