@@ -32,7 +32,7 @@ RUN apk add --no-cache \
   # Used to unarchive Terraform downloads
   unzip=~6 \
   # jq for the json in /cleanup/aws.sh
-  jq
+  jq=~1.6
 
 ## Install AWS Cli
 ARG AWS_CLI_VERSION=1.22.27
