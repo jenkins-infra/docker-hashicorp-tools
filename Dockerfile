@@ -24,15 +24,20 @@ RUN apk add --no-cache \
   bash=~5 \
   # Used to download binaries (implies the package "ca-certificates" as a dependency)
   curl=~7 \
+  # Required to ensure GNU conventions for tools like "date"
+  coreutils=~8 \
   # Dev. Tooling packages (e.g. tools provided by this image installable through Alpine Linux Packages)
   git=~2\
+  # jq for the json in /cleanup/aws.sh
+  jq=~1.6 \
+  # Dev workflow
   make=~4 \
   # Required for aws-cli
   py-pip=~20 \
   # Used to unarchive Terraform downloads
   unzip=~6 \
-  # jq for the json in /cleanup/aws.sh
-  jq=~1.6
+  # jq for the yaml in /cleanup/*.sh
+  yq=~4
 
 ## Install AWS Cli
 ARG AWS_CLI_VERSION=1.22.32
@@ -68,7 +73,7 @@ RUN curl --silent --show-error --location --fail \
 
 USER jenkins
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli"
+LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
