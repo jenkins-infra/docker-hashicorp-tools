@@ -40,7 +40,7 @@ RUN apk add --no-cache \
   yq=~4
 
 ## Install AWS Cli
-ARG AWS_CLI_VERSION=1.22.32
+ARG AWS_CLI_VERSION=1.22.33
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ## bash need to be installed for this instruction to work as expected
