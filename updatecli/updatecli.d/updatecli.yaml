@@ -26,7 +26,7 @@ sources:
 
 conditions:
   checkIfDockerImageIsPublished:
-    name: "Check if the Docker Image is published"
+    name: "Check if the docker image is published"
     kind: dockerImage
     spec:
       image: "ghcr.io/updatecli/updatecli"
@@ -34,14 +34,14 @@ conditions:
 
 targets:
   updateCst:
-    name: "Update the value of UPDATECLI_VERSION in the test harness"
+    name: "Update the value of `UPDATECLI_VERSION` in the test harness"
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[7].value"
     scmID: default
   updateDockerfile:
-    name: "Update the value of ARG UPDATECLI_VERSION in the Dockerfile"
+    name: "Update the value of `ARG UPDATECLI_VERSION` in the Dockerfile"
     kind: dockerfile
     spec:
       file: Dockerfile
