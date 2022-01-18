@@ -33,6 +33,7 @@ conditions:
     sourceID: latestRelease
     spec:
       image: "hashicorp/packer"
+      architecture: amd64
       ## tag comes from the source
 
 targets:

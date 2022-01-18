@@ -1,0 +1,62 @@
+title: "Bump updatecli version "
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: "{{ .github.branch }}"
+
+sources:
+  lastVersion:
+    kind: githubRelease
+    name: Get the latest updatecli version
+    spec:
+      owner: "updatecli"
+      repository: "updatecli"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        kind: latest
+
+conditions:
+  checkIfDockerImageIsPublished:
+    name: "Check if the docker image is published"
+    kind: dockerImage
+    spec:
+      image: "ghcr.io/updatecli/updatecli"
+      architecture: "amd64"
+
+targets:
+  updateCst:
+    name: "Update the value of `UPDATECLI_VERSION` in the test harness"
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[7].value"
+    scmID: default
+  updateDockerfile:
+    name: "Update the value of `ARG UPDATECLI_VERSION` in the Dockerfile"
+    kind: dockerfile
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "UPDATECLI_VERSION"
+    scmID: default
+
+pullrequests:
+  default:
+    kind: github
+    scmID: default
+    targets:
+      - updateCst
+      - updateDockerfile
+    spec:
+      labels:
+        - dependencies
