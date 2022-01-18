@@ -16,12 +16,11 @@ metadataTest:
     - key: io.jenkins-infra.tools.packer.version
       value: "1.7.8"
     - key: io.jenkins-infra.tools.updatecli.version
-      value: "v0.17.2"
+      value: "v0.18.3"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
   user: jenkins
-
 # Test for binaries that are not defined in labels (for faster tests)
 fileExistenceTests:
   - name: 'Bash'
