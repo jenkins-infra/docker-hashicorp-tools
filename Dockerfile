@@ -4,11 +4,12 @@
 ARG GO_VERSION=1.17.6
 ARG PACKER_VERSION=1.7.9
 ARG UPDATECLI_VERSION=v0.18.3
+ARG JENKINS_AGENT_VERSION=4.11-1-alpine-jdk11
+
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
 FROM updatecli/updatecli:${UPDATECLI_VERSION} AS updatecli
-
-FROM jenkins/inbound-agent:4.11-1-alpine-jdk11
+FROM jenkins/inbound-agent:"${JENKINS_AGENT_VERSION}"
 
 USER root
 
