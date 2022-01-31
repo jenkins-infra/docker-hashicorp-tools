@@ -82,7 +82,7 @@ COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 USER jenkins
 
-## trick to have it working again
+## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_AGENT_VERSION=4.11-1-alpine-jdk11
 
 LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent"
