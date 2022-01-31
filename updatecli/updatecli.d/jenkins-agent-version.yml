@@ -25,13 +25,13 @@ sources:
       versionFilter:
         kind: latest
       transformers:
-        - addPrefix: "-alpine-jdk11"
+        - addSuffix: "-alpine-jdk11"
 
 conditions:
   testDockerfile:
     name: "Does the Dockerfile have an ARG instruction which key is JENKINS_AGENT_VERSION?"
     kind: dockerfile
-    disablesourceinput: true
+    #disablesourceinput: true
     spec:
       file: Dockerfile
       instruction:
