@@ -24,6 +24,8 @@ sources:
       username: "{{ .github.username }}"
       versionFilter:
         kind: latest
+      transformers:
+        - addPrefix: "-alpine-jdk11"
 
 conditions:
   testDockerfile:
@@ -41,7 +43,7 @@ conditions:
     disablesourceinput: true
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[7].key"
+      key: "metadataTest.labels[8].key"
       value: io.jenkins-infra.tools.jenkins-agent.version
 
 
@@ -52,8 +54,8 @@ targets:
     kind: yaml
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[7].value"
-    scmID: default
+      key: "metadataTest.labels[8].value"
+    # scmID: default
   updateDockerfileVersion:
     name: "Update the value of ARG JENKINS_AGENT_VERSION in the Dockerfile"
     sourceID: lastVersion
@@ -63,7 +65,7 @@ targets:
       instruction:
         keyword: "ARG"
         matcher: "JENKINS_AGENT_VERSION"
-    scmID: default
+    # scmID: default
 
 pullrequests:
   default:

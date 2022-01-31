@@ -8,9 +8,8 @@ ARG JENKINS_AGENT_VERSION=4.11-1-alpine-jdk11
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
-FROM updatecli/updatecli:${UPDATECLI_VERSION} AS updatecli
+FROM updatecli/updatecli:"${UPDATECLI_VERSION}" AS updatecli
 FROM jenkins/inbound-agent:"${JENKINS_AGENT_VERSION}"
-
 USER root
 
 RUN apk add --no-cache \
@@ -83,7 +82,10 @@ COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 USER jenkins
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli"
+## trick to have it working again
+ARG JENKINS_AGENT_VERSION=4.11-1-alpine-jdk11
+
+LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -91,5 +93,6 @@ LABEL io.jenkins-infra.tools.packer.version="${PACKER_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
+LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_AGENT_VERSION}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
