@@ -31,7 +31,7 @@ conditions:
   testDockerfile:
     name: "Does the Dockerfile have an ARG instruction which key is JENKINS_AGENT_VERSION?"
     kind: dockerfile
-    #disablesourceinput: true
+    disablesourceinput: true
     spec:
       file: Dockerfile
       instruction:
@@ -52,20 +52,24 @@ targets:
     name: "Update the test harness"
     sourceID: lastVersion
     kind: yaml
+    transformers:
+      - addSuffix: "-alpine-jdk11"
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[8].value"
-    # scmID: default
+    scmID: default
   updateDockerfileVersion:
     name: "Update the value of ARG JENKINS_AGENT_VERSION in the Dockerfile"
     sourceID: lastVersion
     kind: dockerfile
+    transformers:
+      - addSuffix: "-alpine-jdk11"
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "JENKINS_AGENT_VERSION"
-    # scmID: default
+    scmID: default
 
 pullrequests:
   default:
