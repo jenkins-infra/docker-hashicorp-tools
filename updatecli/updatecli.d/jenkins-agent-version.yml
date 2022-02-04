@@ -45,6 +45,14 @@ conditions:
       file: "cst.yml"
       key: "metadataTest.labels[8].key"
       value: io.jenkins-infra.tools.jenkins-agent.version
+  checkDockerImagePublished:
+    name: "Is latest dockerfile docker-inbound-agent image published?"
+    kind: dockerImage
+    sourceID: lastVersion
+    spec:
+      image: "jenkins/inbound-agent" # How can I add the version that is above here ?
+      architecture: "amd64"
+      ## tag comes from the source
 
 
 targets:
