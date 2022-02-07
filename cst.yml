@@ -18,7 +18,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.updatecli.version
       value: "v0.19.2"
     - key: io.jenkins-infra.tools.jenkins-agent.version
-      value: "4.11-1-alpine-jdk11"
+      value: "4.11.2-4-alpine-jdk11"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
