@@ -1,0 +1,91 @@
+---
+title: "Bump jenkins agent version"
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: "{{ .github.branch }}"
+
+sources:
+  lastVersion:
+    kind: githubRelease
+    name: Get the latest jenkins-agent version
+    spec:
+      owner: "jenkinsci"
+      repository: "docker-inbound-agent"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      versionFilter:
+        kind: latest
+      transformers:
+        - addSuffix: "-alpine-jdk11"
+
+conditions:
+  testDockerfile:
+    name: "Does the Dockerfile have an ARG instruction which key is JENKINS_AGENT_VERSION?"
+    kind: dockerfile
+    disablesourceinput: true
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "JENKINS_AGENT_VERSION"
+  testTestHarness:
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.jenkins-agent.version?"
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[8].key"
+      value: io.jenkins-infra.tools.jenkins-agent.version
+  checkDockerImagePublished:
+    name: "Is latest dockerfile docker-inbound-agent image published?"
+    kind: dockerImage
+    sourceID: lastVersion
+    spec:
+      image: "jenkins/inbound-agent" # How can I add the version that is above here ?
+      architecture: "amd64"
+      ## tag comes from the source
+
+
+targets:
+  updateTestVersion:
+    name: "Update the test harness"
+    sourceID: lastVersion
+    kind: yaml
+    transformers:
+      - addSuffix: "-alpine-jdk11"
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[8].value"
+    scmID: default
+  updateDockerfileVersion:
+    name: "Update the value of ARG JENKINS_AGENT_VERSION in the Dockerfile"
+    sourceID: lastVersion
+    kind: dockerfile
+    transformers:
+      - addSuffix: "-alpine-jdk11"
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "JENKINS_AGENT_VERSION"
+    scmID: default
+
+pullrequests:
+  default:
+    kind: github
+    scmID: default
+    targets:
+      - updateTestVersion
+      - updateDockerfileVersion
+    spec:
+      labels:
+        - dependencies

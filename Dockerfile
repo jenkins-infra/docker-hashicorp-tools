@@ -2,14 +2,14 @@
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.17.6
-ARG PACKER_VERSION=1.7.9
+ARG PACKER_VERSION=1.7.10
 ARG UPDATECLI_VERSION=v0.19.2
+ARG JENKINS_AGENT_VERSION=4.11-1-alpine-jdk11
+
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
-FROM updatecli/updatecli:${UPDATECLI_VERSION} AS updatecli
-
-FROM jenkins/inbound-agent:4.11-1-alpine-jdk11
-
+FROM updatecli/updatecli:"${UPDATECLI_VERSION}" AS updatecli
+FROM jenkins/inbound-agent:"${JENKINS_AGENT_VERSION}"
 USER root
 
 RUN apk add --no-cache \
@@ -44,11 +44,11 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.17.6
-ARG PACKER_VERSION=1.7.9
+ARG PACKER_VERSION=1.7.10
 ARG UPDATECLI_VERSION=v0.19.2
 
 ## Install AWS Cli
-ARG AWS_CLI_VERSION=1.22.37
+ARG AWS_CLI_VERSION=1.22.49
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -64,7 +64,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install tfsec CLI
-ARG TFSEC_VERSION=0.63.1
+ARG TFSEC_VERSION=1.1.1
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
@@ -72,7 +72,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.43.0
+ARG GOLANGCILINT_VERSION=1.44.0
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
@@ -82,7 +82,10 @@ COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 USER jenkins
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli"
+## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
+ARG JENKINS_AGENT_VERSION=4.11-1-alpine-jdk11
+
+LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -90,5 +93,6 @@ LABEL io.jenkins-infra.tools.packer.version="${PACKER_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
+LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_AGENT_VERSION}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
