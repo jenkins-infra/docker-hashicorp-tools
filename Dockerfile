@@ -3,7 +3,7 @@
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.17.6
 ARG PACKER_VERSION=1.7.9
-ARG UPDATECLI_VERSION=v0.18.3
+ARG UPDATECLI_VERSION=v0.19.2
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
 FROM updatecli/updatecli:${UPDATECLI_VERSION} AS updatecli
@@ -45,7 +45,7 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.17.6
 ARG PACKER_VERSION=1.7.9
-ARG UPDATECLI_VERSION=v0.18.3
+ARG UPDATECLI_VERSION=v0.19.2
 
 ## Install AWS Cli
 ARG AWS_CLI_VERSION=1.22.37
