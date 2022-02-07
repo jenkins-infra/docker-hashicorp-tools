@@ -8,15 +8,15 @@ metadataTest:
     - key: io.jenkins-infra.tools.golang.version
       value: "1.17.6"
     - key: io.jenkins-infra.tools.tfsec.version
-      value: "0.63.1"
+      value: "1.1.1"
     - key: io.jenkins-infra.tools.golangci-lint.version
-      value: "1.43.0"
+      value: "1.44.0"
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.22.37"
+      value: "1.22.49"
     - key: io.jenkins-infra.tools.packer.version
-      value: "1.7.9"
+      value: "1.7.10"
     - key: io.jenkins-infra.tools.updatecli.version
-      value: "v0.18.3"
+      value: "v0.19.2"
     - key: io.jenkins-infra.tools.jenkins-agent.version
       value: "4.11.2-4-alpine-jdk11"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
