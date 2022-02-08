@@ -18,7 +18,7 @@ RUN apk add --no-cache \
   # Used to download binaries (implies the package "ca-certificates" as a dependency)
   curl=~7 \
   # Required to ensure GNU conventions for tools like "date"
-  coreutils=~8 \
+  coreutils=~9 \
   # Dev. Tooling packages (e.g. tools provided by this image installable through Alpine Linux Packages)
   git=~2\
   # jq for the json in /cleanup/aws.sh
