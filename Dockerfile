@@ -64,7 +64,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install tfsec CLI
-ARG TFSEC_VERSION=1.1.5
+ARG TFSEC_VERSION=1.4.1
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
