@@ -8,7 +8,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.golang.version
       value: "1.17.7"
     - key: io.jenkins-infra.tools.tfsec.version
-      value: "1.4.2"
+      value: "1.6.2"
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.44.2"
     - key: io.jenkins-infra.tools.aws-cli.version
@@ -16,7 +16,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.packer.version
       value: "1.8.0"
     - key: io.jenkins-infra.tools.updatecli.version
-      value: "v0.20.0"
+      value: "v0.20.1"
     - key: io.jenkins-infra.tools.jenkins-agent.version
       value: "4.11.2-4-alpine-jdk11"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
