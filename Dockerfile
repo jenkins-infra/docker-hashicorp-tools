@@ -80,12 +80,20 @@ RUN curl --silent --show-error --location --fail \
 ### Install updatecli
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
+## Install Azure Cli
+ARG AZ_CLI_VERSION=2.34.1
+# hadolint ignore=DL3013,DL3018
+RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
+    && apk add --no-cache py3-pynacl py3-cryptography \
+    && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
+    && apk del .az-build-deps
+
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_AGENT_VERSION=4.11.2-4-alpine-jdk11
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent"
+LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent,az-cli"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -94,5 +102,7 @@ LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
 LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_AGENT_VERSION}"
+LABEL io.jenkins-infra.tools.az-cli.version="${AZ_CLI_VERSION}"
+
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
