@@ -83,7 +83,8 @@ COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 ## Install Azure Cli
 ARG AZ_CLI_VERSION=2.34.1
 # hadolint ignore=DL3013,DL3018
-RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make py3-pynacl \
+RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
+    && apk add --no-cache py3-pynacl py3-cryptography \
     && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
     && apk del .az-build-deps
 
