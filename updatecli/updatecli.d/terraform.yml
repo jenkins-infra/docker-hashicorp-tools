@@ -24,8 +24,8 @@ sources:
       username: "{{ .github.username }}"
       versionFilter:
         kind: regex
-        # Stick to versions 1.0.x of terraform
-        pattern: 'v1\.0\.(\d*)$'
+        # Stick to versions 1.1.x of terraform
+        pattern: 'v1\.1\.(\d*)$'
     transformers:
       - trimPrefix: "v"
 
