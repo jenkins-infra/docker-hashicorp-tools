@@ -26,6 +26,8 @@ sources:
         kind: regex
         ## Latest stable x.y.z version
         pattern: '(\d*)\.(\d*)\.(\d*)$'
+    transformers:
+      - trimPrefix: "azure-cli-"
 
 conditions:
   testDockerfileArgAzCliVersion:
