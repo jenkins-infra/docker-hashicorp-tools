@@ -76,3 +76,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
+        - awscli

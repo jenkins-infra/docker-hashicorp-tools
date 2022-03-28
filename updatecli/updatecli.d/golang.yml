@@ -77,3 +77,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
+        - golang
