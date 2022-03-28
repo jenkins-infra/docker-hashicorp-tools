@@ -3,7 +3,7 @@
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.17.8
 ARG PACKER_VERSION=1.8.0
-ARG UPDATECLI_VERSION=v0.22.2
+ARG UPDATECLI_VERSION=v0.22.3
 ARG JENKINS_AGENT_VERSION=4.13-1-alpine-jdk11
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -45,10 +45,10 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.17.8
 ARG PACKER_VERSION=1.8.0
-ARG UPDATECLI_VERSION=v0.22.2
+ARG UPDATECLI_VERSION=v0.22.3
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.22.77
+ARG AWS_CLI_VERSION=1.22.82
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -64,7 +64,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install tfsec CLI
-ARG TFSEC_VERSION=1.11.0
+ARG TFSEC_VERSION=1.15.0
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
@@ -72,7 +72,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.45.0
+ARG GOLANGCILINT_VERSION=1.45.2
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
