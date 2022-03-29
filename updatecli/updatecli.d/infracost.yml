@@ -1,5 +1,5 @@
 ---
-title: "Bump golangci-lint version"
+title: "Bump infracost version"
 
 scms:
   default:
@@ -14,56 +14,54 @@ scms:
       branch: "{{ .github.branch }}"
 
 sources:
-  getGolangcilintVersion:
+  getVersion:
     kind: githubRelease
-    name: Get the latest Golangcilint version
+    name: Get the latest infracost version
     spec:
-      owner: "golangci"
-      repository: "golangci-lint"
+      owner: "infracost"
+      repository: "infracost"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
       versionFilter:
-        kind: latest
-    transformers:
-      - trimPrefix: "v"
+        kind: semver
 
 conditions:
-  testDockerfileArgGolangcilintVersion:
-    name: "Does the Dockerfile have an ARG instruction which key is GOLANGCILINT_VERSION?"
+  testDockerfileArgVersion:
+    name: "Does the Dockerfile have an ARG instruction which key is INFRACOST_VERSION?"
     kind: dockerfile
     disablesourceinput: true
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
-        matcher: "GOLANGCILINT_VERSION"
-  testCstGolangciLintVersion:
-    name: "Does the test harness checks for a label io.jenkins-infra.tools.golangci-lint.version?"
+        matcher: "INFRACOST_VERSION"
+  testCstVersion:
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.infracost.version?"
     kind: yaml
     disablesourceinput: true
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[4].key"
-      value: io.jenkins-infra.tools.golangci-lint.version
+      key: "metadataTest.labels[10].key"
+      value: io.jenkins-infra.tools.infracost.version
 
 targets:
   updateCstVersion:
-    name: "Update the label io.jenkins-infra.tools.golangci-lint.version in the test harness"
-    sourceID: getGolangcilintVersion
+    name: "Update the label io.jenkins-infra.tools.infracost.version in the test harness"
+    sourceID: getVersion
     kind: yaml
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[4].value"
+      key: "metadataTest.labels[10].value"
     scmID: default
   updateDockerfileArgVersion:
-    name: "Update the value of ARG GOLANGCILINT_VERSION in the Dockerfile"
-    sourceID: getGolangcilintVersion
+    name: "Update the value of ARG INFRACOST_VERSION in the Dockerfile"
+    sourceID: getVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
-        matcher: "GOLANGCILINT_VERSION"
+        matcher: "INFRACOST_VERSION"
     scmID: default
 
 pullrequests:
@@ -76,4 +74,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
-        - golangci-lint
+        - infracost

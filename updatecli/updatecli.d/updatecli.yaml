@@ -60,3 +60,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
+        - updatecli

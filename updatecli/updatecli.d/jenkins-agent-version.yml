@@ -89,3 +89,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
+        - jenkins-agent

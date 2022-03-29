@@ -74,3 +74,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
+        - tfsec
