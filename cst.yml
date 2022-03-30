@@ -22,7 +22,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.az-cli.version
       value: "2.34.1"
     - key: io.jenkins-infra.tools.infracost.version
-      value: "0.9.20"
+      value: "0.9.21"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
