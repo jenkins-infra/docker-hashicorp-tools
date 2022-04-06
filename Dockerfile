@@ -58,7 +58,7 @@ RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 # curl -sSL https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_SHA256SUMS | grep linux_amd64
 ARG TERRAFORM_VERSION=1.1.7
 RUN curl --silent --show-error --location --output /tmp/terraform.zip \
-    "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
+  "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
   && unzip /tmp/terraform.zip -d /usr/local/bin \
   && rm -f /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
@@ -66,7 +66,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
 ### Install tfsec CLI
 ARG TFSEC_VERSION=1.15.4
 RUN curl --silent --show-error --location --output /tmp/tfsec \
-    "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
+  "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
   && mv /tmp/tfsec /usr/local/bin/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
@@ -84,14 +84,14 @@ COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 ARG AZ_CLI_VERSION=2.34.1
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
-    && apk add --no-cache py3-pynacl py3-cryptography \
-    && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
-    && apk del .az-build-deps
+  && apk add --no-cache py3-pynacl py3-cryptography \
+  && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
+  && apk del .az-build-deps
 
 ### Install infracost CLI
 ARG INFRACOST_VERSION=0.9.21
 RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
-    "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
+  "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
   && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
   && chmod a+x /tmp/infracost-linux-amd64 \
   && mv /tmp/infracost-linux-amd64 /usr/local/bin/infracost \
@@ -102,7 +102,7 @@ USER jenkins
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_AGENT_VERSION=4.13-1-alpine-jdk11
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent,az-cli,infracost"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,infracost,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -111,7 +111,7 @@ LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
 LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_AGENT_VERSION}"
-LABEL io.jenkins-infra.tools.az-cli.version="${AZ_CLI_VERSION}"
+LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.infracost.version="${INFRACOST_VERSION}"
 
 

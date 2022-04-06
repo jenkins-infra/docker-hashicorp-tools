@@ -2,7 +2,7 @@ schemaVersion: 2.0.0
 metadataTest:
   labels:
     - key: io.jenkins-infra.tools
-      value: "golang,terraform,tfsec,packer,golangci-lint,aws-cli,yq,updatecli,jenkins-agent,az-cli,infracost"
+      value: "aws-cli,azure-cli,golang,golangci-lint,infracost,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
     - key: io.jenkins-infra.tools.terraform.version
       value: "1.1.7"
     - key: io.jenkins-infra.tools.golang.version
@@ -19,7 +19,7 @@ metadataTest:
       value: "v0.22.3"
     - key: io.jenkins-infra.tools.jenkins-agent.version
       value: "4.13-1-alpine-jdk11"
-    - key: io.jenkins-infra.tools.az-cli.version
+    - key: io.jenkins-infra.tools.azure-cli.version
       value: "2.34.1"
     - key: io.jenkins-infra.tools.infracost.version
       value: "0.9.21"
@@ -29,30 +29,30 @@ metadataTest:
   user: jenkins
 # Test for binaries that are not defined in labels (for faster tests)
 fileExistenceTests:
-  - name: 'Bash'
-    path: '/bin/bash'
+  - name: "Bash"
+    path: "/bin/bash"
     shouldExist: true
-    isExecutableBy: 'any'
-  - name: 'Curl'
-    path: '/usr/bin/curl'
+    isExecutableBy: "any"
+  - name: "Curl"
+    path: "/usr/bin/curl"
     shouldExist: true
-    isExecutableBy: 'any'
-  - name: 'Git'
-    path: '/usr/bin/git'
+    isExecutableBy: "any"
+  - name: "Git"
+    path: "/usr/bin/git"
     shouldExist: true
-    isExecutableBy: 'any'
-  - name: 'Make'
-    path: '/usr/bin/make'
+    isExecutableBy: "any"
+  - name: "Make"
+    path: "/usr/bin/make"
     shouldExist: true
-    isExecutableBy: 'any'
-  - name: 'Unzip'
-    path: '/usr/bin/unzip'
+    isExecutableBy: "any"
+  - name: "Unzip"
+    path: "/usr/bin/unzip"
     shouldExist: true
-    isExecutableBy: 'any'
-  - name: 'yq'
-    path: '/usr/bin/yq'
+    isExecutableBy: "any"
+  - name: "yq"
+    path: "/usr/bin/yq"
     shouldExist: true
-    isExecutableBy: 'any'
+    isExecutableBy: "any"
   - name: "Default user's home"
-    path: '/home/jenkins'
+    path: "/home/jenkins"
     shouldExist: true
