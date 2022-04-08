@@ -1,5 +1,4 @@
----
-title: "Bump azcli version"
+title: "Bump azure-cli version"
 
 scms:
   default:
@@ -16,7 +15,7 @@ scms:
 sources:
   getAzCliVersion:
     kind: githubRelease
-    name: Get the latest AzCli version
+    name: Get the latest azure-cli version
     spec:
       owner: "Azure"
       repository: "azure-cli"
@@ -25,7 +24,7 @@ sources:
       versionFilter:
         kind: regex
         ## Latest stable x.y.z version
-        pattern: '(\d*)\.(\d*)\.(\d*)$'
+        pattern: 'azure-cli-(\d*)\.(\d*)\.(\d*)$'
     transformers:
       - trimPrefix: "azure-cli-"
 
@@ -40,17 +39,17 @@ conditions:
         keyword: "ARG"
         matcher: "AZ_CLI_VERSION"
   testCstAzCliVersion:
-    name: "Does the test harness checks for a label io.jenkins-infra.tools.az-cli.version?"
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.azure-cli.version?"
     kind: yaml
     disablesourceinput: true
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[9].key"
-      value: io.jenkins-infra.tools.az-cli.version
+      value: io.jenkins-infra.tools.azure-cli.version
 
 targets:
   updateCstVersion:
-    name: "Update the label io.jenkins-infra.tools.az-cli.version in the test harness"
+    name: "Update the label io.jenkins-infra.tools.azure-cli.version in the test harness"
     sourceID: getAzCliVersion
     kind: yaml
     spec:
@@ -78,4 +77,4 @@ pullrequests:
     spec:
       labels:
         - dependencies
-        - az-cli
+        - azure-cli
