@@ -20,7 +20,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.jenkins-agent.version
       value: "4.13-2-alpine-jdk11"
     - key: io.jenkins-infra.tools.azure-cli.version
-      value: "2.35.0"
+      value: "2.36.0"
     - key: io.jenkins-infra.tools.infracost.version
       value: "0.9.23"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
