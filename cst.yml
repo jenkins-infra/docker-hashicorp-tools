@@ -8,7 +8,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.golang.version
       value: "1.18.2"
     - key: io.jenkins-infra.tools.tfsec.version
-      value: "1.21.2"
+      value: "1.22.0"
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.46.2"
     - key: io.jenkins-infra.tools.aws-cli.version
