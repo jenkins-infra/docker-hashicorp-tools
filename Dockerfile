@@ -1,8 +1,8 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.18.2
-ARG PACKER_VERSION=1.8.0
+ARG GO_VERSION=1.18.3
+ARG PACKER_VERSION=1.8.1
 ARG UPDATECLI_VERSION=v0.25.0
 ARG JENKINS_AGENT_VERSION=4.13-2-alpine-jdk11
 
@@ -43,12 +43,12 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.18.2
-ARG PACKER_VERSION=1.8.0
+ARG GO_VERSION=1.18.3
+ARG PACKER_VERSION=1.8.1
 ARG UPDATECLI_VERSION=v0.25.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.24.10
+ARG AWS_CLI_VERSION=1.25.2
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -64,7 +64,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install tfsec CLI
-ARG TFSEC_VERSION=1.21.2
+ARG TFSEC_VERSION=1.22.0
 RUN curl --silent --show-error --location --output /tmp/tfsec \
   "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
@@ -89,7 +89,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 ### Install infracost CLI
-ARG INFRACOST_VERSION=0.9.24
+ARG INFRACOST_VERSION=0.10.1
 RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
   "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
   && tar -xvzf /tmp/infracost.tar.gz -C /tmp \

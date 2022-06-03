@@ -6,15 +6,15 @@ metadataTest:
     - key: io.jenkins-infra.tools.terraform.version
       value: "1.1.9"
     - key: io.jenkins-infra.tools.golang.version
-      value: "1.18.2"
+      value: "1.18.3"
     - key: io.jenkins-infra.tools.tfsec.version
-      value: "1.21.2"
+      value: "1.22.0"
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.46.2"
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.24.10"
+      value: "1.25.2"
     - key: io.jenkins-infra.tools.packer.version
-      value: "1.8.0"
+      value: "1.8.1"
     - key: io.jenkins-infra.tools.updatecli.version
       value: "v0.25.0"
     - key: io.jenkins-infra.tools.jenkins-agent.version
@@ -22,7 +22,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.azure-cli.version
       value: "2.37.0"
     - key: io.jenkins-infra.tools.infracost.version
-      value: "0.9.24"
+      value: "0.10.1"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
