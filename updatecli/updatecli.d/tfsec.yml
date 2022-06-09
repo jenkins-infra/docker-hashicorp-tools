@@ -15,14 +15,14 @@ scms:
 
 sources:
   getTfsecVersion:
-    kind: githubRelease
+    kind: githubrelease
     name: Get the latest Tfsec version
     spec:
       owner: "tfsec"
       repository: "tfsec"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: semver
 
 conditions:
@@ -47,27 +47,27 @@ conditions:
 targets:
   updateCstVersion:
     name: "Update the label io.jenkins-infra.tools.tfsec.version in the test harness"
-    sourceID: getTfsecVersion
+    sourceid: getTfsecVersion
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[3].value"
-    scmID: default
+    scmid: default
   updateDockerfileArgVersion:
     name: "Update the value of ARG TFSEC_VERSION in the Dockerfile"
-    sourceID: getTfsecVersion
+    sourceid: getTfsecVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "TFSEC_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCstVersion
       - updateDockerfileArgVersion

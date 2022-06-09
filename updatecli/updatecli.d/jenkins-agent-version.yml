@@ -15,17 +15,15 @@ scms:
 
 sources:
   lastVersion:
-    kind: githubRelease
+    kind: githubrelease
     name: Get the latest jenkins-agent version
     spec:
       owner: "jenkinsci"
       repository: "docker-inbound-agent"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: latest
-      transformers:
-        - addSuffix: "-alpine-jdk11"
 
 conditions:
   testDockerfile:
@@ -47,8 +45,8 @@ conditions:
       value: io.jenkins-infra.tools.jenkins-agent.version
   checkDockerImagePublished:
     name: "Is latest dockerfile docker-inbound-agent image published?"
-    kind: dockerImage
-    sourceID: lastVersion
+    kind: dockerimage
+    sourceid: lastVersion
     spec:
       image: "jenkins/inbound-agent" # How can I add the version that is above here ?
       architecture: "amd64"
@@ -58,31 +56,31 @@ conditions:
 targets:
   updateTestVersion:
     name: "Update the test harness"
-    sourceID: lastVersion
+    sourceid: lastVersion
     kind: yaml
     transformers:
-      - addSuffix: "-alpine-jdk11"
+      - addsuffix: "-alpine-jdk11"
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[8].value"
-    scmID: default
+    scmid: default
   updateDockerfileVersion:
     name: "Update the value of ARG JENKINS_AGENT_VERSION in the Dockerfile"
-    sourceID: lastVersion
+    sourceid: lastVersion
     kind: dockerfile
     transformers:
-      - addSuffix: "-alpine-jdk11"
+      - addsuffix: "-alpine-jdk11"
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "JENKINS_AGENT_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateTestVersion
       - updateDockerfileVersion

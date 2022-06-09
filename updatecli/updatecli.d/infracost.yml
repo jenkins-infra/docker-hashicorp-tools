@@ -15,14 +15,14 @@ scms:
 
 sources:
   getVersion:
-    kind: githubRelease
+    kind: githubrelease
     name: Get the latest infracost version
     spec:
       owner: "infracost"
       repository: "infracost"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: semver
 
 conditions:
@@ -47,27 +47,27 @@ conditions:
 targets:
   updateCstVersion:
     name: "Update the label io.jenkins-infra.tools.infracost.version in the test harness"
-    sourceID: getVersion
+    sourceid: getVersion
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[10].value"
-    scmID: default
+    scmid: default
   updateDockerfileArgVersion:
     name: "Update the value of ARG INFRACOST_VERSION in the Dockerfile"
-    sourceID: getVersion
+    sourceid: getVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "INFRACOST_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCstVersion
       - updateDockerfileArgVersion

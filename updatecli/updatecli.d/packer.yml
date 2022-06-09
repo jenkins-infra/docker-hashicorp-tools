@@ -16,21 +16,21 @@ scms:
 sources:
   latestRelease:
     name: Get latest hashicorp/packer version
-    kind: githubRelease
+    kind: githubrelease
     spec:
       owner: "hashicorp"
       repository: "packer"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         # retrieve the latest version as semver (without 'v' prefix)
         kind: semver
 
 conditions:
   checkDockerImagePublished:
     name: "Is latest hashicorp/packer docker image published?"
-    kind: dockerImage
-    sourceID: latestRelease
+    kind: dockerimage
+    sourceid: latestRelease
     spec:
       image: "hashicorp/packer"
       architecture: amd64
@@ -45,19 +45,19 @@ targets:
       instruction:
         keyword: "ARG"
         matcher: "PACKER_VERSION"
-    scmID: default
+    scmid: default
   updateCstVersion:
     name: "Update the version of packer in the test harness"
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[6].value"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCstVersion
       - updateDockerfileArgVersion
