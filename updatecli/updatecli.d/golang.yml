@@ -15,18 +15,18 @@ scms:
 
 sources:
   getGolangVersion:
-    kind: githubRelease
+    kind: githubrelease
     spec:
       owner: golang
       repository: go
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: regex
         ## Latest stable 1.x.y version
         pattern: 'go1\.(\d*)\.(\d*)$'
     transformers:
-      - trimPrefix: go
+      - trimprefix: go
 
 conditions:
   testDockerfileArgGoVersion:
@@ -50,27 +50,27 @@ conditions:
 targets:
   updateCstVersion:
     name: "Update the label io.jenkins-infra.tools.golang.version in the test harness"
-    sourceID: getGolangVersion
+    sourceid: getGolangVersion
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[2].value"
-    scmID: default
+    scmid: default
   updateDockerfileArgVersion:
     name: "Update the value of ARG GO_VERSION in the Dockerfile"
-    sourceID: getGolangVersion
+    sourceid: getGolangVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "GO_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCstVersion
       - updateDockerfileArgVersion

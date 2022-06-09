@@ -14,19 +14,19 @@ scms:
 
 sources:
   getAzCliVersion:
-    kind: githubRelease
+    kind: githubrelease
     name: Get the latest azure-cli version
     spec:
       owner: "Azure"
       repository: "azure-cli"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: regex
         ## Latest stable x.y.z version
         pattern: 'azure-cli-(\d*)\.(\d*)\.(\d*)$'
     transformers:
-      - trimPrefix: "azure-cli-"
+      - trimprefix: "azure-cli-"
 
 conditions:
   testDockerfileArgAzCliVersion:
@@ -50,27 +50,27 @@ conditions:
 targets:
   updateCstVersion:
     name: "Update the label io.jenkins-infra.tools.azure-cli.version in the test harness"
-    sourceID: getAzCliVersion
+    sourceid: getAzCliVersion
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[9].value"
-    scmID: default
+    scmid: default
   updateDockerfileArgVersion:
     name: "Update the value of ARG AZ_CLI_VERSION in the Dockerfile"
-    sourceID: getAzCliVersion
+    sourceid: getAzCliVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "AZ_CLI_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCstVersion
       - updateDockerfileArgVersion

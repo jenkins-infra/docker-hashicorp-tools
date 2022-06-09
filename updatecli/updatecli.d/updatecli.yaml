@@ -14,20 +14,20 @@ scms:
 
 sources:
   lastVersion:
-    kind: githubRelease
+    kind: githubrelease
     name: Get the latest updatecli version
     spec:
       owner: "updatecli"
       repository: "updatecli"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: latest
 
 conditions:
   checkIfDockerImageIsPublished:
     name: "Check if the docker image is published"
-    kind: dockerImage
+    kind: dockerimage
     spec:
       image: "ghcr.io/updatecli/updatecli"
       architecture: "amd64"
@@ -39,7 +39,7 @@ targets:
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[7].value"
-    scmID: default
+    scmid: default
   updateDockerfile:
     name: "Update the value of `ARG UPDATECLI_VERSION` in the Dockerfile"
     kind: dockerfile
@@ -48,12 +48,12 @@ targets:
       instruction:
         keyword: "ARG"
         matcher: "UPDATECLI_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCst
       - updateDockerfile

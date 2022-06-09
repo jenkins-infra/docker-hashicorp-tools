@@ -15,17 +15,17 @@ scms:
 
 sources:
   getGolangcilintVersion:
-    kind: githubRelease
+    kind: githubrelease
     name: Get the latest Golangcilint version
     spec:
       owner: "golangci"
       repository: "golangci-lint"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
-      versionFilter:
+      versionfilter:
         kind: latest
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
 conditions:
   testDockerfileArgGolangcilintVersion:
@@ -49,27 +49,27 @@ conditions:
 targets:
   updateCstVersion:
     name: "Update the label io.jenkins-infra.tools.golangci-lint.version in the test harness"
-    sourceID: getGolangcilintVersion
+    sourceid: getGolangcilintVersion
     kind: yaml
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[4].value"
-    scmID: default
+    scmid: default
   updateDockerfileArgVersion:
     name: "Update the value of ARG GOLANGCILINT_VERSION in the Dockerfile"
-    sourceID: getGolangcilintVersion
+    sourceid: getGolangcilintVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
         matcher: "GOLANGCILINT_VERSION"
-    scmID: default
+    scmid: default
 
 pullrequests:
   default:
     kind: github
-    scmID: default
+    scmid: default
     targets:
       - updateCstVersion
       - updateDockerfileArgVersion
