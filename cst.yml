@@ -12,7 +12,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.46.2"
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.25.17"
+      value: "1.25.22"
     - key: io.jenkins-infra.tools.packer.version
       value: "1.8.2"
     - key: io.jenkins-infra.tools.updatecli.version
