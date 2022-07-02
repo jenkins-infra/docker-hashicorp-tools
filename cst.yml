@@ -22,7 +22,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.azure-cli.version
       value: "2.37.0"
     - key: io.jenkins-infra.tools.infracost.version
-      value: "0.10.5"
+      value: "0.10.6"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
