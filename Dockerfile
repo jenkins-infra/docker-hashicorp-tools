@@ -89,7 +89,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 ### Install infracost CLI
-ARG INFRACOST_VERSION=0.10.5
+ARG INFRACOST_VERSION=0.10.6
 RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
   "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
   && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
