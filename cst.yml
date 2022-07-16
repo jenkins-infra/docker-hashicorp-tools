@@ -18,7 +18,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.updatecli.version
       value: "v0.25.0"
     - key: io.jenkins-infra.tools.jenkins-agent.version
-      value: "4.13-2-alpine-jdk11"
+      value: "4.13.2-1-alpine-jdk11"
     - key: io.jenkins-infra.tools.azure-cli.version
       value: "2.37.0"
     - key: io.jenkins-infra.tools.infracost.version
