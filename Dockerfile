@@ -12,25 +12,27 @@ FROM updatecli/updatecli:"${UPDATECLI_VERSION}" AS updatecli
 FROM jenkins/inbound-agent:"${JENKINS_AGENT_VERSION}"
 USER root
 
+## Always use latest package versions (except for tools that should be pinned of course)
+# hadolint ignore=DL3018
 RUN apk add --no-cache \
   # To allow easier CLI completion + running shell scripts with array support
-  bash=~5 \
+  bash \
   # Used to download binaries (implies the package "ca-certificates" as a dependency)
-  curl=~7 \
+  curl \
   # Required to ensure GNU conventions for tools like "date"
-  coreutils=~9 \
+  coreutils \
   # Dev. Tooling packages (e.g. tools provided by this image installable through Alpine Linux Packages)
-  git=~2\
+  git \
   # jq for the json in /cleanup/aws.sh
-  jq=~1.6 \
+  jq~=1.6 \
   # Dev workflow
-  make=~4 \
+  make \
   # Required for aws-cli
-  py-pip=~20 \
+  py-pip \
   # Used to unarchive Terraform downloads
-  unzip=~6 \
-  # jq for the yaml in /cleanup/*.sh
-  yq=~4
+  unzip \
+  # yq for the yaml in /cleanup/*.sh
+  yq~=4
 
 ## bash need to be installed for this instruction to work as expected
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
