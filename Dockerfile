@@ -1,9 +1,9 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.18.3
+ARG GO_VERSION=1.18.4
 ARG PACKER_VERSION=1.8.2
-ARG UPDATECLI_VERSION=v0.25.0
+ARG UPDATECLI_VERSION=v0.27.0
 ARG JENKINS_AGENT_VERSION=4.13.2-1-alpine-jdk11
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -43,9 +43,9 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.18.3
+ARG GO_VERSION=1.18.4
 ARG PACKER_VERSION=1.8.2
-ARG UPDATECLI_VERSION=v0.25.0
+ARG UPDATECLI_VERSION=v0.27.0
 
 ## Install AWS CLI
 ARG AWS_CLI_VERSION=1.25.31
@@ -64,7 +64,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install tfsec CLI
-ARG TFSEC_VERSION=1.26.0
+ARG TFSEC_VERSION=1.26.3
 RUN curl --silent --show-error --location --output /tmp/tfsec \
   "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
@@ -81,7 +81,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.37.0
+ARG AZ_CLI_VERSION=2.38.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
@@ -89,7 +89,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 ### Install infracost CLI
-ARG INFRACOST_VERSION=0.10.6
+ARG INFRACOST_VERSION=0.10.7
 RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
   "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
   && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
