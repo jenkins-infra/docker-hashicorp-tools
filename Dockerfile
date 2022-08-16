@@ -2,7 +2,7 @@
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.18.5
-ARG PACKER_VERSION=1.8.2
+ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.29.0
 ARG JENKINS_AGENT_VERSION=4.13.2-1-alpine-jdk11
 
@@ -46,11 +46,11 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.18.5
-ARG PACKER_VERSION=1.8.2
+ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.29.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.25.46
+ARG AWS_CLI_VERSION=1.25.52
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
