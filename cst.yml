@@ -8,9 +8,9 @@ metadataTest:
     - key: io.jenkins-infra.tools.golang.version
       value: "1.19.1"
     - key: io.jenkins-infra.tools.tfsec.version
-      value: "1.27.2"
+      value: "1.27.6"
     - key: io.jenkins-infra.tools.golangci-lint.version
-      value: "1.48.0"
+      value: "1.49.0"
     - key: io.jenkins-infra.tools.aws-cli.version
       value: "1.25.76"
     - key: io.jenkins-infra.tools.packer.version
@@ -20,9 +20,9 @@ metadataTest:
     - key: io.jenkins-infra.tools.jenkins-agent.version
       value: "3046.v38db_38a_b_7a_86-1-alpine-jdk11"
     - key: io.jenkins-infra.tools.azure-cli.version
-      value: "2.39.0"
+      value: "2.40.0"
     - key: io.jenkins-infra.tools.infracost.version
-      value: "0.10.10"
+      value: "0.10.11"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"

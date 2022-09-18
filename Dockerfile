@@ -66,7 +66,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install tfsec CLI
-ARG TFSEC_VERSION=1.27.2
+ARG TFSEC_VERSION=1.27.6
 RUN curl --silent --show-error --location --output /tmp/tfsec \
   "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
@@ -74,7 +74,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.48.0
+ARG GOLANGCILINT_VERSION=1.49.0
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
@@ -83,7 +83,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.39.0
+ARG AZ_CLI_VERSION=2.40.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
@@ -91,7 +91,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 ### Install infracost CLI
-ARG INFRACOST_VERSION=0.10.10
+ARG INFRACOST_VERSION=0.10.11
 RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
   "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
   && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
