@@ -4,7 +4,7 @@
 ARG GO_VERSION=1.19.1
 ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.34.0
-ARG JENKINS_AGENT_VERSION=3046.v38db_38a_b_7a_86-1-alpine-jdk11
+ARG JENKINS_AGENT_VERSION=3063.v26e24490f041-2-alpine-jdk11
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -50,7 +50,7 @@ ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.34.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.25.76
+ARG AWS_CLI_VERSION=1.25.85
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -91,7 +91,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 ### Install infracost CLI
-ARG INFRACOST_VERSION=0.10.11
+ARG INFRACOST_VERSION=0.10.12
 RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
   "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
   && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
@@ -102,7 +102,7 @@ RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_AGENT_VERSION=3046.v38db_38a_b_7a_86-1-alpine-jdk11
+ARG JENKINS_AGENT_VERSION=3063.v26e24490f041-2-alpine-jdk11
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,infracost,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
