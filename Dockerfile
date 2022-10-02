@@ -4,7 +4,7 @@
 ARG GO_VERSION=1.19.1
 ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.33.2
-ARG JENKINS_AGENT_VERSION=3046.v38db_38a_b_7a_86-1-alpine-jdk11
+ARG JENKINS_AGENT_VERSION=3063.v26e24490f041-2-alpine-jdk11
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -102,7 +102,7 @@ RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_AGENT_VERSION=3046.v38db_38a_b_7a_86-1-alpine-jdk11
+ARG JENKINS_AGENT_VERSION=3063.v26e24490f041-2-alpine-jdk11
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,infracost,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
