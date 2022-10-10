@@ -1,5 +1,5 @@
 ---
-title: "Bump awscli version"
+name: "Bump awscli version"
 
 scms:
   default:
@@ -70,9 +70,6 @@ pullrequests:
   default:
     kind: github
     scmid: default
-    targets:
-      - updateCstVersion
-      - updateDockerfileArgVersion
     spec:
       labels:
         - dependencies
