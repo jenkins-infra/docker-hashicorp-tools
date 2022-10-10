@@ -1,5 +1,5 @@
 ---
-title: "Bump golang version"
+name: "Bump golang version"
 
 scms:
   default:
@@ -71,9 +71,6 @@ pullrequests:
   default:
     kind: github
     scmid: default
-    targets:
-      - updateCstVersion
-      - updateDockerfileArgVersion
     spec:
       labels:
         - dependencies

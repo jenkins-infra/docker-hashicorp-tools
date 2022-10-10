@@ -1,5 +1,5 @@
 ---
-title: "Bump jenkins agent version"
+name: "Bump jenkins agent version"
 
 scms:
   default:
@@ -81,9 +81,6 @@ pullrequests:
   default:
     kind: github
     scmid: default
-    targets:
-      - updateTestVersion
-      - updateDockerfileVersion
     spec:
       labels:
         - dependencies

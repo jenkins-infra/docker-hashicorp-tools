@@ -1,5 +1,5 @@
 ---
-title: "Bump terraform version"
+name: "Bump terraform version"
 
 scms:
   default:
@@ -72,9 +72,6 @@ pullrequests:
   default:
     kind: github
     scmid: default
-    targets:
-      - updateCstVersion
-      - updateDockerfileArgVersion
     spec:
       labels:
         - dependencies

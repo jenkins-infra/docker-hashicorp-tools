@@ -1,5 +1,5 @@
 ---
-title: Bump packer docker image version
+name: Bump packer docker image version
 
 scms:
   default:
@@ -25,6 +25,8 @@ sources:
       versionfilter:
         # retrieve the latest version as semver (without 'v' prefix)
         kind: semver
+    transformers:
+      - trimprefix: v
 
 conditions:
   checkDockerImagePublished:
@@ -58,9 +60,6 @@ pullrequests:
   default:
     kind: github
     scmid: default
-    targets:
-      - updateCstVersion
-      - updateDockerfileArgVersion
     spec:
       labels:
         - dependencies

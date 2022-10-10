@@ -1,4 +1,5 @@
-title: "Bump azure-cli version"
+---
+name: "Bump azure-cli version"
 
 scms:
   default:
@@ -71,9 +72,6 @@ pullrequests:
   default:
     kind: github
     scmid: default
-    targets:
-      - updateCstVersion
-      - updateDockerfileArgVersion
     spec:
       labels:
         - dependencies
