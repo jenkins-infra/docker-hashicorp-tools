@@ -50,7 +50,7 @@ ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.35.1
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.25.85
+ARG AWS_CLI_VERSION=1.26.4
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -95,7 +95,7 @@ USER jenkins
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_INBOUND_AGENT_VERSION=3071.v7e9b_0dc08466-1
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -103,7 +103,7 @@ LABEL io.jenkins-infra.tools.packer.version="${PACKER_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
-LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
+LABEL io.jenkins-infra.tools.jenkins-inbound-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
 
 
