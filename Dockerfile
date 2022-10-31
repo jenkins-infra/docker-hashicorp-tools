@@ -4,12 +4,12 @@
 ARG GO_VERSION=1.19.2
 ARG PACKER_VERSION=1.8.3
 ARG UPDATECLI_VERSION=v0.35.1
-ARG JENKINS_AGENT_VERSION=3063.v26e24490f041-2-alpine-jdk11
+ARG JENKINS_INBOUND_AGENT_VERSION=3063.v26e24490f041-2
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
 FROM updatecli/updatecli:"${UPDATECLI_VERSION}" AS updatecli
-FROM jenkins/inbound-agent:"${JENKINS_AGENT_VERSION}"
+FROM jenkins/inbound-agent:"${JENKINS_INBOUND_AGENT_VERSION}"-alpine-jdk11
 USER root
 
 ## Always use latest package versions (except for tools that should be pinned of course)
@@ -90,21 +90,12 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
   && apk del .az-build-deps
 
-### Install infracost CLI
-ARG INFRACOST_VERSION=0.10.12
-RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
-  "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
-  && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
-  && chmod a+x /tmp/infracost-linux-amd64 \
-  && mv /tmp/infracost-linux-amd64 /usr/local/bin/infracost \
-  && infracost --version | grep "${INFRACOST_VERSION}"
-
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_AGENT_VERSION=3063.v26e24490f041-2-alpine-jdk11
+ARG JENKINS_INBOUND_AGENT_VERSION=3063.v26e24490f041-2
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,infracost,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -112,9 +103,8 @@ LABEL io.jenkins-infra.tools.packer.version="${PACKER_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
-LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_AGENT_VERSION}"
+LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
-LABEL io.jenkins-infra.tools.infracost.version="${INFRACOST_VERSION}"
 
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]

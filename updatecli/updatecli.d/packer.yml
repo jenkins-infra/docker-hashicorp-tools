@@ -1,5 +1,5 @@
 ---
-name: Bump packer docker image version
+name: Bump `packer` version
 
 scms:
   default:
@@ -60,6 +60,7 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump `packer` version to {{ source "latestRelease" }}
     spec:
       labels:
         - dependencies

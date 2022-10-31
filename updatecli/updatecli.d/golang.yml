@@ -1,5 +1,5 @@
 ---
-name: "Bump golang version"
+name: Bump golang version
 
 scms:
   default:
@@ -71,6 +71,7 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump golang version to {{ source "getGolangVersion" }}
     spec:
       labels:
         - dependencies

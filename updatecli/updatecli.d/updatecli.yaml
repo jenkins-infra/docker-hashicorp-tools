@@ -1,5 +1,5 @@
 ---
-name: "Bump updatecli version "
+name: Bump `updatecli` version
 
 scms:
   default:
@@ -55,6 +55,7 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump `updatecli` version to {{ source "lastVersion" }}
     spec:
       labels:
         - dependencies

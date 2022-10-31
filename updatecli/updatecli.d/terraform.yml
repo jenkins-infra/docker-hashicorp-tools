@@ -1,5 +1,5 @@
 ---
-name: "Bump terraform version"
+name: Bump `terraform`` version
 
 scms:
   default:
@@ -72,6 +72,7 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump `terraform`` version to {{ source "getTerraformVersion" }}
     spec:
       labels:
         - dependencies
