@@ -1,5 +1,5 @@
 ---
-name: "Bump golangci-lint version"
+name: Bump `golangci-lint` CLI version
 
 scms:
   default:
@@ -70,6 +70,7 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump `golangci-lint` CLI version to {{ source "getGolangcilintVersion" }}
     spec:
       labels:
         - dependencies

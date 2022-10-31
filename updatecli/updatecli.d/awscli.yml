@@ -1,5 +1,5 @@
 ---
-name: "Bump awscli version"
+name: Bump the `aws` CLI version
 
 scms:
   default:
@@ -70,7 +70,8 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump the `aws` CLI version to {{ source "getAwscliVersion" }}
     spec:
       labels:
         - dependencies
-        - awscli
+        - aws

@@ -1,5 +1,5 @@
 ---
-name: "Bump azure-cli version"
+name: Bump the `az` CLI version
 
 scms:
   default:
@@ -72,7 +72,9 @@ pullrequests:
   default:
     kind: github
     scmid: default
+    title: Bump the `az` CLI version to {{ source "getAzCliVersion" }}
     spec:
       labels:
         - dependencies
         - azure-cli
+        - az
