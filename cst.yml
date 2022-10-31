@@ -2,7 +2,7 @@ schemaVersion: 2.0.0
 metadataTest:
   labels:
     - key: io.jenkins-infra.tools
-      value: "aws-cli,azure-cli,golang,golangci-lint,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
+      value: "aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
     - key: io.jenkins-infra.tools.terraform.version
       value: "1.1.9"
     - key: io.jenkins-infra.tools.golang.version
@@ -10,17 +10,17 @@ metadataTest:
     - key: io.jenkins-infra.tools.tfsec.version
       value: "1.28.1"
     - key: io.jenkins-infra.tools.golangci-lint.version
-      value: "1.50.0"
+      value: "1.50.1"
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.25.85"
+      value: "1.26.4"
     - key: io.jenkins-infra.tools.packer.version
       value: "1.8.3"
     - key: io.jenkins-infra.tools.updatecli.version
       value: "v0.35.1"
-    - key: io.jenkins-infra.tools.jenkins-agent.version
-      value: "3063.v26e24490f041-2-alpine-jdk11"
+    - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
+      value: "3071.v7e9b_0dc08466-1"
     - key: io.jenkins-infra.tools.azure-cli.version
-      value: "2.40.0"
+      value: "2.41.0"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
