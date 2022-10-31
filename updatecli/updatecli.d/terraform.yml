@@ -23,9 +23,7 @@ sources:
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
       versionfilter:
-        kind: regex
-        # Stick to versions 1.1.x of terraform
-        pattern: 'v1\.1\.(\d*)$'
+        kind: semver
     transformers:
       - trimprefix: "v"
 

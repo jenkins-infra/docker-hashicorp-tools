@@ -4,7 +4,7 @@ metadataTest:
     - key: io.jenkins-infra.tools
       value: "aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
     - key: io.jenkins-infra.tools.terraform.version
-      value: "1.1.9"
+      value: "1.3.3"
     - key: io.jenkins-infra.tools.golang.version
       value: "1.19.2"
     - key: io.jenkins-infra.tools.tfsec.version
