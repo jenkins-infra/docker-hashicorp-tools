@@ -90,21 +90,12 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
   && apk del .az-build-deps
 
-### Install infracost CLI
-ARG INFRACOST_VERSION=0.10.12
-RUN curl --silent --show-error --location --output /tmp/infracost.tar.gz \
-  "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-linux-amd64.tar.gz" \
-  && tar -xvzf /tmp/infracost.tar.gz -C /tmp \
-  && chmod a+x /tmp/infracost-linux-amd64 \
-  && mv /tmp/infracost-linux-amd64 /usr/local/bin/infracost \
-  && infracost --version | grep "${INFRACOST_VERSION}"
-
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_INBOUND_AGENT_VERSION=3063.v26e24490f041-2
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,infracost,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -114,7 +105,6 @@ LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
 LABEL io.jenkins-infra.tools.jenkins-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
-LABEL io.jenkins-infra.tools.infracost.version="${INFRACOST_VERSION}"
 
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
