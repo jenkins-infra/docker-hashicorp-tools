@@ -48,11 +48,12 @@ conditions:
   checkDockerImagePublished:
     name: "Is latest dockerfile docker-inbound-agent image published?"
     kind: dockerimage
-    sourceid: lastVersion
+    disablesourceinput: true
     spec:
-      image: "jenkins/inbound-agent" # How can I add the version that is above here ?
+      image: "jenkins/inbound-agent"
       architecture: "amd64"
-      ## tag comes from the source
+      tag: '{{ source "lastVersion" }}-alpine-jdk11'
+
 
 
 targets:
