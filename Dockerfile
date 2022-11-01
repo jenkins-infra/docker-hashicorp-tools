@@ -50,7 +50,7 @@ ARG PACKER_VERSION=1.8.4
 ARG UPDATECLI_VERSION=v0.36.1
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.26.4
+ARG AWS_CLI_VERSION=1.26.5
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -83,7 +83,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.41.0
+ARG AZ_CLI_VERSION=2.42.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
