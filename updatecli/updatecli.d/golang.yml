@@ -46,6 +46,14 @@ conditions:
       file: "cst.yml"
       key: "metadataTest.labels[2].key"
       value: io.jenkins-infra.tools.golang.version
+  checkForDockerImage:
+    name: "Check for a Docker image golang:<versions>-alpine"
+    kind: dockerimage
+    disablesourceinput: true
+    spec:
+      architecture: amd64
+      image: golang
+      tag: '{{ source "getGolangVersion" }}-alpine'
 
 targets:
   updateCstVersion:

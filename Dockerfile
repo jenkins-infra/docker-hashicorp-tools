@@ -1,9 +1,9 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.19.2
+ARG GO_VERSION=1.19.3
 ARG PACKER_VERSION=1.8.4
-ARG UPDATECLI_VERSION=v0.36.1
+ARG UPDATECLI_VERSION=v0.37.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3071.v7e9b_0dc08466-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -45,12 +45,12 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.19.2
+ARG GO_VERSION=1.19.3
 ARG PACKER_VERSION=1.8.4
-ARG UPDATECLI_VERSION=v0.36.1
+ARG UPDATECLI_VERSION=v0.37.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.26.4
+ARG AWS_CLI_VERSION=1.27.8
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -83,7 +83,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.41.0
+ARG AZ_CLI_VERSION=2.42.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
