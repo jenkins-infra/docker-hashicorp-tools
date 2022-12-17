@@ -2,7 +2,7 @@
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.19.4
-ARG PACKER_VERSION=1.8.4
+ARG PACKER_VERSION=1.8.5
 ARG UPDATECLI_VERSION=v0.39.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3077.vd69cf116da_6f-3
 
@@ -46,7 +46,7 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.19.4
-ARG PACKER_VERSION=1.8.4
+ARG PACKER_VERSION=1.8.5
 ARG UPDATECLI_VERSION=v0.39.0
 
 ## Install AWS CLI
