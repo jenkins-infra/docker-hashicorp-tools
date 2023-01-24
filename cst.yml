@@ -21,6 +21,8 @@ metadataTest:
       value: "3085.vc4c6977c075a-4"
     - key: io.jenkins-infra.tools.azure-cli.version
       value: "2.44.1"
+    - key: io.jenkins-infra.tools.azure-cli-extension-aks-preview.version
+      value: "0.5.118"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
