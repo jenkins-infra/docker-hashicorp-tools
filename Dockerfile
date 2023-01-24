@@ -90,6 +90,10 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
   && apk del .az-build-deps
 
+## Install aks-preview Azure CLI extension
+ARG AZ_CLI_AKS_PREVIEW_VERSION=0.5.118
+RUN az extension add --name aks-preview --version $AZ_CLI_AKS_PREVIEW_VERSION
+
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
@@ -105,6 +109,6 @@ LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
 LABEL io.jenkins-infra.tools.jenkins-inbound-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
-
+LABEL io.jenkins-infra.tools.azure-cli-extension-aks-preview.version="${AZ_CLI_AKS_PREVIEW_VERSION}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
