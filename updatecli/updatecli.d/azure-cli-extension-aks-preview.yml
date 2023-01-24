@@ -1,0 +1,63 @@
+---
+name: Bump the `aks-preview` azure CLI extension version
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      token: "{{ requiredEnv .github.token }}"
+      username: "{{ .github.username }}"
+      branch: "{{ .github.branch }}"
+
+sources:
+  getAksPreviewVersion:
+    kind: shell
+    name: Get the latest aks-preview version
+    spec:
+      command: bash ./updatecli/scripts/az-cli-extension-aks-preview.sh
+
+conditions:
+  testCstAksPreviewVersion:
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.azure-cli-extension-aks-preview.version?"
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[10].key"
+      value: io.jenkins-infra.tools.azure-cli-extension-aks-preview.version
+
+targets:
+  updateCstVersion:
+    name: "Update the label io.jenkins-infra.tools.azure-cli-extension-aks-preview.version in the test harness"
+    sourceid: getAksPreviewVersion
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[10].value"
+    scmid: default
+  updateDockerfileArgVersion:
+    name: "Update the value of ARG AZ_CLI_AKS_PREVIEW_VERSION in the Dockerfile"
+    sourceid: getAksPreviewVersion
+    kind: dockerfile
+    spec:
+      file: Dockerfile
+      instruction:
+        keyword: "ARG"
+        matcher: "AZ_CLI_AKS_PREVIEW_VERSION"
+    scmid: default
+
+pullrequests:
+  default:
+    kind: github
+    scmid: default
+    title: Bump the `aks-preview` azure CLI extension version to {{ source "getAzCliVersion" }}
+    spec:
+      labels:
+        - dependencies
+        - azure-cli
+        - az
+        - aks-preview
