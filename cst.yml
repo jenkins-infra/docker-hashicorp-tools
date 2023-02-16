@@ -6,7 +6,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.terraform.version
       value: "1.1.9"
     - key: io.jenkins-infra.tools.golang.version
-      value: "1.19.5"
+      value: "1.20.1"
     - key: io.jenkins-infra.tools.tfsec.version
       value: "1.28.1"
     - key: io.jenkins-infra.tools.golangci-lint.version
@@ -16,7 +16,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.packer.version
       value: "1.8.6"
     - key: io.jenkins-infra.tools.updatecli.version
-      value: "v0.43.0"
+      value: "v0.44.2"
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: "3107.v665000b_51092-2"
     - key: io.jenkins-infra.tools.azure-cli.version
