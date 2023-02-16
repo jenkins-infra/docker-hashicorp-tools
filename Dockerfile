@@ -50,7 +50,7 @@ ARG PACKER_VERSION=1.8.6
 ARG UPDATECLI_VERSION=v0.44.2
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.27.69
+ARG AWS_CLI_VERSION=1.27.72
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
