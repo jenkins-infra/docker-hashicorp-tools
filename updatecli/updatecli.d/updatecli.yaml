@@ -51,9 +51,9 @@ targets:
         matcher: "UPDATECLI_VERSION"
     scmid: default
 
-pullrequests:
+actions:
   default:
-    kind: github
+    kind: github/pullrequest
     scmid: default
     title: Bump `updatecli` version to {{ source "lastVersion" }}
     spec:
