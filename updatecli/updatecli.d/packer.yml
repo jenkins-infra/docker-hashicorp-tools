@@ -56,9 +56,9 @@ targets:
       key: "metadataTest.labels[6].value"
     scmid: default
 
-pullrequests:
+actions:
   default:
-    kind: github
+    kind: github/pullrequest
     scmid: default
     title: Bump `packer` version to {{ source "latestRelease" }}
     spec:
