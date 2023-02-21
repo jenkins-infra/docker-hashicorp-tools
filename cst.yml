@@ -1,56 +1,56 @@
 schemaVersion: 2.0.0
 metadataTest:
-  labels:
-    - key: io.jenkins-infra.tools
-      value: "aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
-    - key: io.jenkins-infra.tools.terraform.version
-      value: "1.1.9"
-    - key: io.jenkins-infra.tools.golang.version
-      value: "1.20.1"
-    - key: io.jenkins-infra.tools.tfsec.version
-      value: "1.28.1"
-    - key: io.jenkins-infra.tools.golangci-lint.version
-      value: "1.51.1"
-    - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.27.72"
-    - key: io.jenkins-infra.tools.packer.version
-      value: "1.8.6"
-    - key: io.jenkins-infra.tools.updatecli.version
-      value: "v0.44.2"
-    - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
-      value: "3107.v665000b_51092-4"
-    - key: io.jenkins-infra.tools.azure-cli.version
-      value: "2.45.0"
-  entrypoint: ["/usr/local/bin/jenkins-agent"]
-  cmd: []
-  workdir: "/home/jenkins"
-  user: jenkins
+    labels:
+        - key: io.jenkins-infra.tools
+          value: "aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
+        - key: io.jenkins-infra.tools.terraform.version
+          value: "1.1.9"
+        - key: io.jenkins-infra.tools.golang.version
+          value: "1.20.1"
+        - key: io.jenkins-infra.tools.tfsec.version
+          value: "1.28.1"
+        - key: io.jenkins-infra.tools.golangci-lint.version
+          value: "1.51.1"
+        - key: io.jenkins-infra.tools.aws-cli.version
+          value: "1.27.72"
+        - key: io.jenkins-infra.tools.packer.version
+          value: "1.8.6"
+        - key: io.jenkins-infra.tools.updatecli.version
+          value: "v0.44.4"
+        - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
+          value: "3107.v665000b_51092-4"
+        - key: io.jenkins-infra.tools.azure-cli.version
+          value: "2.45.0"
+    entrypoint: ["/usr/local/bin/jenkins-agent"]
+    cmd: []
+    workdir: "/home/jenkins"
+    user: jenkins
 # Test for binaries that are not defined in labels (for faster tests)
 fileExistenceTests:
-  - name: "Bash"
-    path: "/bin/bash"
-    shouldExist: true
-    isExecutableBy: "any"
-  - name: "Curl"
-    path: "/usr/bin/curl"
-    shouldExist: true
-    isExecutableBy: "any"
-  - name: "Git"
-    path: "/usr/bin/git"
-    shouldExist: true
-    isExecutableBy: "any"
-  - name: "Make"
-    path: "/usr/bin/make"
-    shouldExist: true
-    isExecutableBy: "any"
-  - name: "Unzip"
-    path: "/usr/bin/unzip"
-    shouldExist: true
-    isExecutableBy: "any"
-  - name: "yq"
-    path: "/usr/bin/yq"
-    shouldExist: true
-    isExecutableBy: "any"
-  - name: "Default user's home"
-    path: "/home/jenkins"
-    shouldExist: true
+    - name: "Bash"
+      path: "/bin/bash"
+      shouldExist: true
+      isExecutableBy: "any"
+    - name: "Curl"
+      path: "/usr/bin/curl"
+      shouldExist: true
+      isExecutableBy: "any"
+    - name: "Git"
+      path: "/usr/bin/git"
+      shouldExist: true
+      isExecutableBy: "any"
+    - name: "Make"
+      path: "/usr/bin/make"
+      shouldExist: true
+      isExecutableBy: "any"
+    - name: "Unzip"
+      path: "/usr/bin/unzip"
+      shouldExist: true
+      isExecutableBy: "any"
+    - name: "yq"
+      path: "/usr/bin/yq"
+      shouldExist: true
+      isExecutableBy: "any"
+    - name: "Default user's home"
+      path: "/home/jenkins"
+      shouldExist: true
