@@ -3,7 +3,7 @@
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.20.1
 ARG PACKER_VERSION=1.8.6
-ARG UPDATECLI_VERSION=v0.44.2
+ARG UPDATECLI_VERSION=v0.44.4
 ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-4
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -47,7 +47,7 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.20.1
 ARG PACKER_VERSION=1.8.6
-ARG UPDATECLI_VERSION=v0.44.2
+ARG UPDATECLI_VERSION=v0.44.4
 
 ## Install AWS CLI
 ARG AWS_CLI_VERSION=1.27.75
@@ -74,7 +74,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.51.1
+ARG GOLANGCILINT_VERSION=1.51.2
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
