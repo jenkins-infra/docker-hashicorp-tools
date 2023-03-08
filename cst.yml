@@ -20,7 +20,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: "3107.v665000b_51092-4"
     - key: io.jenkins-infra.tools.azure-cli.version
-      value: "2.45.0"
+      value: "2.46.0"
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
