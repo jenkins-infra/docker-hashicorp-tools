@@ -67,9 +67,9 @@ targets:
         matcher: "TERRAFORM_VERSION"
     scmid: default
 
-pullrequests:
+actions:
   default:
-    kind: github
+    kind: github/pullrequest
     scmid: default
     title: Bump `terraform`` version to {{ source "getTerraformVersion" }}
     spec:

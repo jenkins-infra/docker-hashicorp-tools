@@ -66,9 +66,9 @@ targets:
         matcher: "GOLANGCILINT_VERSION"
     scmid: default
 
-pullrequests:
+actions:
   default:
-    kind: github
+    kind: github/pullrequest
     scmid: default
     title: Bump `golangci-lint` CLI version to {{ source "getGolangcilintVersion" }}
     spec:

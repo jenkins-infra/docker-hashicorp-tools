@@ -1,10 +1,10 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.19.5
-ARG PACKER_VERSION=1.8.5
-ARG UPDATECLI_VERSION=v0.43.0
-ARG JENKINS_INBOUND_AGENT_VERSION=3085.vc4c6977c075a-4
+ARG GO_VERSION=1.20.3
+ARG PACKER_VERSION=1.8.6
+ARG UPDATECLI_VERSION=v0.48.1
+ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-5
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -45,12 +45,12 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.19.5
-ARG PACKER_VERSION=1.8.5
-ARG UPDATECLI_VERSION=v0.43.0
+ARG GO_VERSION=1.20.3
+ARG PACKER_VERSION=1.8.6
+ARG UPDATECLI_VERSION=v0.48.1
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.27.64
+ARG AWS_CLI_VERSION=1.27.109
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -74,7 +74,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.51.0
+ARG GOLANGCILINT_VERSION=1.52.2
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
@@ -83,7 +83,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.44.1
+ARG AZ_CLI_VERSION=2.47.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
@@ -93,7 +93,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_INBOUND_AGENT_VERSION=3085.vc4c6977c075a-4
+ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-5
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
