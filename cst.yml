@@ -14,7 +14,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.aws-cli.version
       value: "1.27.114"
     - key: io.jenkins-infra.tools.packer.version
-      value: "1.8.6"
+      value: "1.8.7"
     - key: io.jenkins-infra.tools.updatecli.version
       value: "v0.48.1"
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
