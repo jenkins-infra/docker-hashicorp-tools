@@ -1,8 +1,7 @@
 # Golang is required for terratest
-# 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.20.3
-ARG PACKER_VERSION=1.8.6
+ARG GO_VERSION=1.20.4
+ARG PACKER_VERSION=1.8.7
 ARG UPDATECLI_VERSION=v0.49.2
 ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-5
 
@@ -45,12 +44,12 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.20.3
-ARG PACKER_VERSION=1.8.6
+ARG GO_VERSION=1.20.4
+ARG PACKER_VERSION=1.8.7
 ARG UPDATECLI_VERSION=v0.49.2
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.27.114
+ARG AWS_CLI_VERSION=1.27.129
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI

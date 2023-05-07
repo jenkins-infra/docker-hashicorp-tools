@@ -6,15 +6,15 @@ metadataTest:
     - key: io.jenkins-infra.tools.terraform.version
       value: "1.1.9"
     - key: io.jenkins-infra.tools.golang.version
-      value: "1.20.3"
+      value: "1.20.4"
     - key: io.jenkins-infra.tools.tfsec.version
       value: "1.28.1"
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.52.2"
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.27.114"
+      value: "1.27.129"
     - key: io.jenkins-infra.tools.packer.version
-      value: "1.8.6"
+      value: "1.8.7"
     - key: io.jenkins-infra.tools.updatecli.version
       value: "v0.49.2"
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
