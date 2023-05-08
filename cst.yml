@@ -16,7 +16,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.packer.version
       value: "1.8.7"
     - key: io.jenkins-infra.tools.updatecli.version
-      value: "v0.48.1"
+      value: "v0.49.2"
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: "3107.v665000b_51092-5"
     - key: io.jenkins-infra.tools.azure-cli.version
