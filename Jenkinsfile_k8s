@@ -1,1 +1,3 @@
+properties([buildDiscarder(logRotator(daysToKeepStr: '15'))])
+
 parallelDockerUpdatecli([imageName: 'hashicorp-tools', rebuildImageOnPeriodicJob: false, useContainer:false])
