@@ -1,7 +1,7 @@
 # Golang is required for terratest
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.20.4
-ARG PACKER_VERSION=1.8.7
+ARG PACKER_VERSION=1.9.1
 ARG UPDATECLI_VERSION=v0.52.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-15
 
@@ -45,11 +45,11 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.20.4
-ARG PACKER_VERSION=1.8.7
+ARG PACKER_VERSION=1.9.1
 ARG UPDATECLI_VERSION=v0.52.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.27.137
+ARG AWS_CLI_VERSION=1.27.146
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -73,7 +73,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.52.2
+ARG GOLANGCILINT_VERSION=1.53.1
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
@@ -82,7 +82,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.48.1
+ARG AZ_CLI_VERSION=2.49.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
