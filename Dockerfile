@@ -3,7 +3,7 @@
 ARG GO_VERSION=1.20.5
 ARG PACKER_VERSION=1.9.1
 ARG UPDATECLI_VERSION=v0.54.0
-ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-15
+ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -92,7 +92,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-15
+ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
