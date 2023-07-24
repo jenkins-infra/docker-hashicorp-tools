@@ -1,6 +1,6 @@
 # Golang is required for terratest
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.20.5
+ARG GO_VERSION=1.20.6
 ARG PACKER_VERSION=1.9.2
 ARG UPDATECLI_VERSION=v0.54.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
@@ -44,7 +44,7 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.20.5
+ARG GO_VERSION=1.20.6
 ARG PACKER_VERSION=1.9.2
 ARG UPDATECLI_VERSION=v0.54.0
 
