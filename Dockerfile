@@ -1,9 +1,9 @@
 # Golang is required for terratest
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.20.6
-ARG PACKER_VERSION=1.9.1
+ARG PACKER_VERSION=1.9.2
 ARG UPDATECLI_VERSION=v0.54.0
-ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-15
+ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -45,11 +45,11 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.20.6
-ARG PACKER_VERSION=1.9.1
+ARG PACKER_VERSION=1.9.2
 ARG UPDATECLI_VERSION=v0.54.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.29.1
+ARG AWS_CLI_VERSION=1.29.9
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -92,7 +92,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_INBOUND_AGENT_VERSION=3107.v665000b_51092-15
+ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
