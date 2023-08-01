@@ -3,7 +3,7 @@
 ARG GO_VERSION=1.20.6
 ARG PACKER_VERSION=1.9.2
 ARG UPDATECLI_VERSION=v0.55.2
-ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
+ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -49,7 +49,7 @@ ARG PACKER_VERSION=1.9.2
 ARG UPDATECLI_VERSION=v0.55.2
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.29.15
+ARG AWS_CLI_VERSION=1.29.16
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -82,7 +82,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.50.0
+ARG AZ_CLI_VERSION=2.51.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
@@ -92,7 +92,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_INBOUND_AGENT_VERSION=3131.vf2b_b_798b_ce99-3
+ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
