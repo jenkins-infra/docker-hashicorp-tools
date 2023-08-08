@@ -89,12 +89,21 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
   && apk del .az-build-deps
 
+# Install doctl
+ARG DOCTL_VERSION=1.97.1
+RUN curl --silent --show-error --location --output /tmp/doctl.tar.gz\
+    "https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" \
+  && tar zxf /tmp/doctl.tar.gz -C /usr/local/bin/ \
+  && rm -f /tmp/doctl.tar.gz \
+  && chmod +x /usr/local/bin/doctl \
+  && doctl version | grep -q "${DOCTL_VERSION}"
+
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -104,6 +113,8 @@ LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
 LABEL io.jenkins-infra.tools.jenkins-inbound-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
+LABEL io.jenkins-infra.tools.doctl.version="${DOCTL_VERSION}"
+
 
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
