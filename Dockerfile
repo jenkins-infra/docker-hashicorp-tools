@@ -8,7 +8,7 @@ ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
 FROM updatecli/updatecli:"${UPDATECLI_VERSION}" AS updatecli
-FROM jenkins/inbound-agent:"${JENKINS_INBOUND_AGENT_VERSION}"-alpine-jdk11
+FROM jenkins/inbound-agent:"${JENKINS_INBOUND_AGENT_VERSION}"-alpine-jdk17
 USER root
 
 ## Always use latest package versions (except for tools that should be pinned of course)
