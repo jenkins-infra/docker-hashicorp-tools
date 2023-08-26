@@ -16,7 +16,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.packer.version
       value: 1.9.2
     - key: io.jenkins-infra.tools.updatecli.version
-      value: v0.57.0
+      value: v0.58.0
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: 3142.vcfca_0cd92128-1
     - key: io.jenkins-infra.tools.azure-cli.version
@@ -56,7 +56,6 @@ fileExistenceTests:
   - name: "Default user's home"
     path: "/home/jenkins"
     shouldExist: true
-
 commandTests:
   - name: "Check that `java` is present in the PATH and default to JDK17"
     command: "java"
