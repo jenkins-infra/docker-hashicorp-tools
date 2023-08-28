@@ -10,13 +10,13 @@ metadataTest:
     - key: io.jenkins-infra.tools.tfsec.version
       value: 1.28.1
     - key: io.jenkins-infra.tools.golangci-lint.version
-      value: 1.54.1
+      value: 1.54.2
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: 1.29.25
+      value: 1.29.35
     - key: io.jenkins-infra.tools.packer.version
       value: 1.9.4
     - key: io.jenkins-infra.tools.updatecli.version
-      value: v0.57.0
+      value: v0.58.0
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: 3142.vcfca_0cd92128-1
     - key: io.jenkins-infra.tools.azure-cli.version
