@@ -2,7 +2,7 @@
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.21.0
 ARG PACKER_VERSION=1.9.2
-ARG UPDATECLI_VERSION=v0.57.0
+ARG UPDATECLI_VERSION=v0.58.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -46,7 +46,7 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.21.0
 ARG PACKER_VERSION=1.9.2
-ARG UPDATECLI_VERSION=v0.57.0
+ARG UPDATECLI_VERSION=v0.58.0
 
 ## Install AWS CLI
 ARG AWS_CLI_VERSION=1.29.35
