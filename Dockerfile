@@ -3,7 +3,7 @@
 ARG GO_VERSION=1.21.0
 ARG PACKER_VERSION=1.9.4
 ARG UPDATECLI_VERSION=v0.58.0
-ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
+ARG JENKINS_INBOUND_AGENT_VERSION=3148.v532a_7e715ee3-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -101,7 +101,7 @@ RUN curl --silent --show-error --location --output /tmp/doctl.tar.gz\
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_INBOUND_AGENT_VERSION=3142.vcfca_0cd92128-1
+ARG JENKINS_INBOUND_AGENT_VERSION=3148.v532a_7e715ee3-1
 
 LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
