@@ -1,6 +1,6 @@
 # Golang is required for terratest
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.21.0
+ARG GO_VERSION=1.21.1
 ARG PACKER_VERSION=1.9.4
 ARG UPDATECLI_VERSION=v0.59.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3148.v532a_7e715ee3-4
@@ -44,12 +44,12 @@ ENV PATH /usr/local/go/bin/:$PATH
 COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.21.0
+ARG GO_VERSION=1.21.1
 ARG PACKER_VERSION=1.9.4
 ARG UPDATECLI_VERSION=v0.59.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.29.40
+ARG AWS_CLI_VERSION=1.29.44
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -82,7 +82,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.51.0
+ARG AZ_CLI_VERSION=2.52.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
