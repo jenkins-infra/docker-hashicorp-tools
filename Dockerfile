@@ -76,7 +76,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
 ### Install trivy CLI
 ARG TRIVY_VERSION=0.45.1
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing trivy~="${TRIVY_VERSION}" \
-  && trivy --version | grep "${TFSEC_VERSION}"
+  && trivy --version | grep "${TRIVY_VERSION}"
 
 ### Install golangcilint CLI
 ARG GOLANGCILINT_VERSION=1.54.2
