@@ -2,7 +2,7 @@ schemaVersion: 2.0.0
 metadataTest:
   labels:
     - key: io.jenkins-infra.tools
-      value: "aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
+      value: "aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,trivy,updatecli,yq"
     - key: io.jenkins-infra.tools.terraform.version
       value: 1.1.9
     - key: io.jenkins-infra.tools.golang.version
@@ -23,6 +23,8 @@ metadataTest:
       value: 2.52.0
     - key: io.jenkins-infra.tools.doctl.version
       value: 1.97.1
+    - key: io.jenkins-infra.tools.trivy.version
+      value: 0.45.1
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
