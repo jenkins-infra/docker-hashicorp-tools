@@ -66,11 +66,17 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
 
 ### Install tfsec CLI
 ARG TFSEC_VERSION=1.28.4
+RUN echo "$"
 RUN curl --silent --show-error --location --output /tmp/tfsec \
   "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
   && mv /tmp/tfsec /usr/local/bin/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
+
+### Install trivy CLI
+ARG TRIVY_VERSION=0.45.1
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing trivy~="${TRIVY_VERSION}" \
+  && trivy --help
 
 ### Install golangcilint CLI
 ARG GOLANGCILINT_VERSION=1.54.2
@@ -103,7 +109,7 @@ USER jenkins
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_INBOUND_AGENT_VERSION=3148.v532a_7e715ee3-7
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,trivy,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
@@ -114,7 +120,6 @@ LABEL io.jenkins-infra.tools.updatecli.version="${UPDATECLI_VERSION}"
 LABEL io.jenkins-infra.tools.jenkins-inbound-agent.version="${JENKINS_INBOUND_AGENT_VERSION}"
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.doctl.version="${DOCTL_VERSION}"
-
-
+LABEL io.jenkins-infra.tools.trivy.version="${TRIVY_VERSION}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
