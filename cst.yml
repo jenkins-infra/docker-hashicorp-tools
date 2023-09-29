@@ -2,13 +2,11 @@ schemaVersion: 2.0.0
 metadataTest:
   labels:
     - key: io.jenkins-infra.tools
-      value: "aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,tfsec,trivy,updatecli,yq"
+      value: "aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,trivy,updatecli,yq"
     - key: io.jenkins-infra.tools.terraform.version
       value: 1.1.9
     - key: io.jenkins-infra.tools.golang.version
       value: 1.21.1
-    - key: io.jenkins-infra.tools.tfsec.version
-      value: 1.28.4
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: 1.54.2
     - key: io.jenkins-infra.tools.aws-cli.version
