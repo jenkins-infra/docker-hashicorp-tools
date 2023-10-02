@@ -53,7 +53,7 @@ targets:
     kind: yaml
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[6].value"
+      key: "metadataTest.labels[5].value"
     scmid: default
 
 actions:
