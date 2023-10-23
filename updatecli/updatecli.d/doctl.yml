@@ -71,5 +71,6 @@ actions:
     title: Bump the `doctl` CLI version to {{ source "doctl" }}
     spec:
       labels:
+        - enhancement
         - dependencies
         - doctl
