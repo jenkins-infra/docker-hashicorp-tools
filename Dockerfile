@@ -2,7 +2,7 @@
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.21.3
 ARG PACKER_VERSION=1.9.4
-ARG UPDATECLI_VERSION=v0.63.0
+ARG UPDATECLI_VERSION=v0.64.1
 ARG JENKINS_INBOUND_AGENT_VERSION=3186.vc3b_7249b_87eb_-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -46,10 +46,10 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.21.3
 ARG PACKER_VERSION=1.9.4
-ARG UPDATECLI_VERSION=v0.63.0
+ARG UPDATECLI_VERSION=v0.64.1
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.29.53
+ARG AWS_CLI_VERSION=1.29.68
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -70,7 +70,7 @@ RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/t
   && trivy --help
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.54.2
+ARG GOLANGCILINT_VERSION=1.55.0
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
@@ -79,7 +79,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.52.0
+ARG AZ_CLI_VERSION=2.53.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
@@ -87,7 +87,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 # Install doctl
-ARG DOCTL_VERSION=1.97.1
+ARG DOCTL_VERSION=1.100.0
 RUN curl --silent --show-error --location --output /tmp/doctl.tar.gz\
     "https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" \
   && tar zxf /tmp/doctl.tar.gz -C /usr/local/bin/ \

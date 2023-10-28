@@ -8,19 +8,19 @@ metadataTest:
     - key: io.jenkins-infra.tools.golang.version
       value: 1.21.3
     - key: io.jenkins-infra.tools.golangci-lint.version
-      value: 1.54.2
+      value: 1.55.0
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: 1.29.53
+      value: 1.29.68
     - key: io.jenkins-infra.tools.packer.version
       value: 1.9.4
     - key: io.jenkins-infra.tools.updatecli.version
-      value: v0.63.0
+      value: v0.64.1
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: 3186.vc3b_7249b_87eb_-1
     - key: io.jenkins-infra.tools.azure-cli.version
-      value: 2.52.0
+      value: 2.53.0
     - key: io.jenkins-infra.tools.doctl.version
-      value: 1.97.1
+      value: 1.100.0
     - key: io.jenkins-infra.tools.trivy.version
       value: 0.46.0
   entrypoint: ["/usr/local/bin/jenkins-agent"]
