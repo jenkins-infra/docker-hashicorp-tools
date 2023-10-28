@@ -70,7 +70,7 @@ RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/t
   && trivy --help
 
 ### Install golangcilint CLI
-ARG GOLANGCILINT_VERSION=1.55.0
+ARG GOLANGCILINT_VERSION=1.55.1
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "/usr/local/bin" "v${GOLANGCILINT_VERSION}"
