@@ -65,7 +65,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install trivy CLI
-ARG TRIVY_VERSION=0.46.1
+ARG TRIVY_VERSION=0.47.0
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing trivy~="${TRIVY_VERSION}" \
   && trivy --help
 
