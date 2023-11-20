@@ -16,7 +16,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.updatecli.version
       value: v0.66.1
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
-      value: 3192.v713e3b_039fb_e-1
+      value: 3192.v713e3b_039fb_e-3
     - key: io.jenkins-infra.tools.azure-cli.version
       value: 2.54.0
     - key: io.jenkins-infra.tools.doctl.version
