@@ -49,7 +49,7 @@ ARG PACKER_VERSION=1.9.4
 ARG UPDATECLI_VERSION=v0.66.1
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.29.84
+ARG AWS_CLI_VERSION=1.30.3
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -65,7 +65,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
 ### Install trivy CLI
-ARG TRIVY_VERSION=0.46.1
+ARG TRIVY_VERSION=0.47.0
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing trivy~="${TRIVY_VERSION}" \
   && trivy --help
 
@@ -79,7 +79,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.53.1
+ARG AZ_CLI_VERSION=2.54.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
