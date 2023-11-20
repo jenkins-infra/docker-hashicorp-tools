@@ -2,7 +2,7 @@
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.21.4
 ARG PACKER_VERSION=1.9.4
-ARG UPDATECLI_VERSION=v0.65.1
+ARG UPDATECLI_VERSION=v0.66.1
 ARG JENKINS_INBOUND_AGENT_VERSION=3192.v713e3b_039fb_e-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -46,10 +46,10 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.21.4
 ARG PACKER_VERSION=1.9.4
-ARG UPDATECLI_VERSION=v0.65.1
+ARG UPDATECLI_VERSION=v0.66.1
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.29.84
+ARG AWS_CLI_VERSION=1.30.3
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -79,7 +79,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.53.1
+ARG AZ_CLI_VERSION=2.54.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
