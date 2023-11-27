@@ -10,11 +10,11 @@ metadataTest:
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: 1.55.2
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: 1.30.6
+      value: 1.30.7
     - key: io.jenkins-infra.tools.packer.version
       value: 1.9.4
     - key: io.jenkins-infra.tools.updatecli.version
-      value: v0.66.1
+      value: v0.67.1
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: 3192.v713e3b_039fb_e-4
     - key: io.jenkins-infra.tools.azure-cli.version
