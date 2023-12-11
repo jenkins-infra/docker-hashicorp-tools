@@ -87,7 +87,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 # Install doctl
-ARG DOCTL_VERSION=1.100.0
+ARG DOCTL_VERSION=1.101.0
 RUN curl --silent --show-error --location --output /tmp/doctl.tar.gz\
     "https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" \
   && tar zxf /tmp/doctl.tar.gz -C /usr/local/bin/ \
