@@ -1,8 +1,8 @@
 # Golang is required for terratest
 # Alpine is used by default for fast and ligthweight customization
 ARG GO_VERSION=1.21.5
-ARG PACKER_VERSION=1.9.4
-ARG UPDATECLI_VERSION=v0.68.0
+ARG PACKER_VERSION=1.10.0
+ARG UPDATECLI_VERSION=v0.69.0
 ARG JENKINS_INBOUND_AGENT_VERSION=3192.v713e3b_039fb_e-5
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
@@ -45,11 +45,11 @@ COPY --from=packersource /bin/packer /usr/local/bin/
 
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION=1.21.5
-ARG PACKER_VERSION=1.9.4
-ARG UPDATECLI_VERSION=v0.68.0
+ARG PACKER_VERSION=1.10.0
+ARG UPDATECLI_VERSION=v0.69.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.31.6
+ARG AWS_CLI_VERSION=1.32.2
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ### Install Terraform CLI
@@ -79,7 +79,7 @@ RUN curl --silent --show-error --location --fail \
 COPY --from=updatecli /usr/local/bin/updatecli /usr/local/bin/updatecli
 
 ## Install Azure CLI
-ARG AZ_CLI_VERSION=2.54.0
+ARG AZ_CLI_VERSION=2.55.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
@@ -87,7 +87,7 @@ RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-
   && apk del .az-build-deps
 
 # Install doctl
-ARG DOCTL_VERSION=1.100.0
+ARG DOCTL_VERSION=1.101.0
 RUN curl --silent --show-error --location --output /tmp/doctl.tar.gz\
     "https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz" \
   && tar zxf /tmp/doctl.tar.gz -C /usr/local/bin/ \
