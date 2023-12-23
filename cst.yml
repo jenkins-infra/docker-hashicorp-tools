@@ -20,7 +20,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.azure-cli.version
       value: 2.55.0
     - key: io.jenkins-infra.tools.doctl.version
-      value: 1.101.0
+      value: 1.102.0
     - key: io.jenkins-infra.tools.trivy.version
       value: 0.47.0
   entrypoint: ["/usr/local/bin/jenkins-agent"]
