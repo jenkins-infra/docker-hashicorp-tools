@@ -26,8 +26,8 @@ RUN apk add --no-cache \
   oniguruma \
   # Dev workflow
   make \
-  # Required for aws-cli
-  py-pip \
+  # Required for aws-cli and azure-cli
+  pipx \
   # Used to unarchive Terraform downloads
   unzip \
   # yq for the yaml in /cleanup/*.sh
@@ -44,7 +44,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Golang (for terratest)
 COPY --from=gosource /usr/local/go/ /usr/local/go/
-ENV PATH /usr/local/go/bin/:$PATH
+# .local/bin is for pipx
+ENV PATH /usr/local/go/bin:/home/jenkins/.local/bin:$PATH
 
 # Packer
 COPY --from=packersource /bin/packer /usr/local/bin/
@@ -56,7 +57,7 @@ ARG UPDATECLI_VERSION=v0.70.0
 
 ## Install AWS CLI
 ARG AWS_CLI_VERSION=1.32.8
-RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
+RUN su - jenkins -c "pipx install awscli==${AWS_CLI_VERSION} --pip-args='--no-cache-dir'"
 
 ### Install Terraform CLI
 # Retrieve SHA256sum from https://releases.hashicorp.com/terraform/<TERRAFORM_VERSION>/terraform_<TERRAFORM_VERSION>_SHA256SUMS
@@ -89,7 +90,7 @@ ARG AZ_CLI_VERSION=2.55.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
-  && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
+  && su - jenkins -c "pipx install azure-cli==${AZ_CLI_VERSION} --pip-args='--no-cache-dir'" \
   && apk del .az-build-deps
 
 # Install doctl
