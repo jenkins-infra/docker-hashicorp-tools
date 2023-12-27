@@ -3,7 +3,7 @@
 ARG GO_VERSION=1.21.5
 ARG PACKER_VERSION=1.10.0
 ARG UPDATECLI_VERSION=v0.70.0
-ARG JENKINS_INBOUND_AGENT_VERSION=3192.v713e3b_039fb_e-5
+ARG JENKINS_INBOUND_AGENT_VERSION=3198.v03a_401881f3e-1
 
 FROM golang:"${GO_VERSION}-alpine" AS gosource
 FROM hashicorp/packer:"${PACKER_VERSION}" AS packersource
@@ -22,23 +22,30 @@ RUN apk add --no-cache \
   coreutils \
   # Dev. Tooling packages (e.g. tools provided by this image installable through Alpine Linux Packages)
   git \
-  # jq for the json in /cleanup/aws.sh
-  jq~=1.6 \
+  # dependency for jq
+  oniguruma \
   # Dev workflow
   make \
-  # Required for aws-cli
-  py-pip \
+  # Required for aws-cli and azure-cli
+  pipx \
   # Used to unarchive Terraform downloads
   unzip \
   # yq for the yaml in /cleanup/*.sh
   yq~=4
+
+# Get latest 1.6.x 'jq' for x86_64
+ARG JQ_VERSION=1.6
+RUN curl --silent --show-error --verbose --location --output /usr/local/bin/jq \
+    https://github.com/jqlang/jq/releases/download/jq-"${JQ_VERSION}"/jq-linux64 \
+  && chmod a+x /usr/local/bin/jq
 
 ## bash need to be installed for this instruction to work as expected
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Golang (for terratest)
 COPY --from=gosource /usr/local/go/ /usr/local/go/
-ENV PATH /usr/local/go/bin/:$PATH
+# .local/bin is for pipx
+ENV PATH /usr/local/go/bin:/home/jenkins/.local/bin:$PATH
 
 # Packer
 COPY --from=packersource /bin/packer /usr/local/bin/
@@ -50,7 +57,7 @@ ARG UPDATECLI_VERSION=v0.70.0
 
 ## Install AWS CLI
 ARG AWS_CLI_VERSION=1.32.8
-RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
+RUN su - jenkins -c "pipx install awscli==${AWS_CLI_VERSION} --pip-args='--no-cache-dir'"
 
 ### Install Terraform CLI
 # Retrieve SHA256sum from https://releases.hashicorp.com/terraform/<TERRAFORM_VERSION>/terraform_<TERRAFORM_VERSION>_SHA256SUMS
@@ -83,7 +90,7 @@ ARG AZ_CLI_VERSION=2.55.0
 # hadolint ignore=DL3013,DL3018
 RUN apk add --no-cache --virtual .az-build-deps gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
   && apk add --no-cache py3-pynacl py3-cryptography \
-  && python3 -m pip install --no-cache-dir azure-cli=="${AZ_CLI_VERSION}" \
+  && su - jenkins -c "pipx install azure-cli==${AZ_CLI_VERSION} --pip-args='--no-cache-dir'" \
   && apk del .az-build-deps
 
 # Install doctl
@@ -98,9 +105,9 @@ RUN curl --silent --show-error --location --output /tmp/doctl.tar.gz\
 USER jenkins
 
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
-ARG JENKINS_INBOUND_AGENT_VERSION=3192.v713e3b_039fb_e-5
+ARG JENKINS_INBOUND_AGENT_VERSION=3198.v03a_401881f3e-1
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,trivy,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,jq,packer,terraform,trivy,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.packer.version="${PACKER_VERSION}"
@@ -111,5 +118,6 @@ LABEL io.jenkins-infra.tools.jenkins-inbound-agent.version="${JENKINS_INBOUND_AG
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.doctl.version="${DOCTL_VERSION}"
 LABEL io.jenkins-infra.tools.trivy.version="${TRIVY_VERSION}"
+LABEL io.jenkins-infra.tools.jq.version="${JQ_VERSION}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]

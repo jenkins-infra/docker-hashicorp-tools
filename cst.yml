@@ -2,7 +2,7 @@ schemaVersion: 2.0.0
 metadataTest:
   labels:
     - key: io.jenkins-infra.tools
-      value: "aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,trivy,updatecli,yq"
+      value: "aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,jq,packer,terraform,trivy,updatecli,yq"
     - key: io.jenkins-infra.tools.terraform.version
       value: 1.1.9
     - key: io.jenkins-infra.tools.golang.version
@@ -16,13 +16,15 @@ metadataTest:
     - key: io.jenkins-infra.tools.updatecli.version
       value: v0.70.0
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
-      value: 3192.v713e3b_039fb_e-5
+      value: 3198.v03a_401881f3e-1
     - key: io.jenkins-infra.tools.azure-cli.version
       value: 2.55.0
     - key: io.jenkins-infra.tools.doctl.version
       value: 1.102.0
     - key: io.jenkins-infra.tools.trivy.version
       value: 0.48.1
+    - key: io.jenkins-infra.tools.jq.version
+      value: 1.6
   entrypoint: ["/usr/local/bin/jenkins-agent"]
   cmd: []
   workdir: "/home/jenkins"
@@ -39,6 +41,10 @@ fileExistenceTests:
     isExecutableBy: "any"
   - name: "Git"
     path: "/usr/bin/git"
+    shouldExist: true
+    isExecutableBy: "any"
+  - name: "jq"
+    path: "/usr/local/bin/jq"
     shouldExist: true
     isExecutableBy: "any"
   - name: "Make"
