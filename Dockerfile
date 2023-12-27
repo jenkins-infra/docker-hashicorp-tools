@@ -22,8 +22,8 @@ RUN apk add --no-cache \
   coreutils \
   # Dev. Tooling packages (e.g. tools provided by this image installable through Alpine Linux Packages)
   git \
-  # jq for the json in /cleanup/aws.sh
-  jq~=1.6 \
+  # dependency for jq
+  oniguruma \
   # Dev workflow
   make \
   # Required for aws-cli
@@ -32,6 +32,12 @@ RUN apk add --no-cache \
   unzip \
   # yq for the yaml in /cleanup/*.sh
   yq~=4
+
+# Get latest 1.6.x 'jq' for x86_64
+ARG JQ_VERSION=1.6
+RUN curl --silent --show-error --verbose --location --output /usr/local/bin/jq \
+    https://github.com/jqlang/jq/releases/download/jq-"${JQ_VERSION}"/jq-linux64 \
+  && chmod a+x /usr/local/bin/jq
 
 ## bash need to be installed for this instruction to work as expected
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -100,7 +106,7 @@ USER jenkins
 ## As per https://docs.docker.com/engine/reference/builder/#scope, ARG need to be repeated for each scope
 ARG JENKINS_INBOUND_AGENT_VERSION=3198.v03a_401881f3e-1
 
-LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,packer,terraform,trivy,updatecli,yq"
+LABEL io.jenkins-infra.tools="aws-cli,azure-cli,doctl,golang,golangci-lint,jenkins-inbound-agent,jq,packer,terraform,trivy,updatecli,yq"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.packer.version="${PACKER_VERSION}"
@@ -111,5 +117,6 @@ LABEL io.jenkins-infra.tools.jenkins-inbound-agent.version="${JENKINS_INBOUND_AG
 LABEL io.jenkins-infra.tools.azure-cli.version="${AZ_CLI_VERSION}"
 LABEL io.jenkins-infra.tools.doctl.version="${DOCTL_VERSION}"
 LABEL io.jenkins-infra.tools.trivy.version="${TRIVY_VERSION}"
+LABEL io.jenkins-infra.tools.jq.version="${JQ_VERSION}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
