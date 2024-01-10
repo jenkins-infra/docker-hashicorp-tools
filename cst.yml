@@ -18,7 +18,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.jenkins-inbound-agent.version
       value: 3198.v03a_401881f3e-1
     - key: io.jenkins-infra.tools.azure-cli.version
-      value: 2.55.0
+      value: 2.56.0
     - key: io.jenkins-infra.tools.doctl.version
       value: 1.102.0
     - key: io.jenkins-infra.tools.trivy.version
