@@ -56,7 +56,7 @@ ARG PACKER_VERSION=1.10.0
 ARG UPDATECLI_VERSION=v0.70.0
 
 ## Install AWS CLI
-ARG AWS_CLI_VERSION=1.32.14
+ARG AWS_CLI_VERSION=1.32.15
 RUN su - jenkins -c "pipx install awscli==${AWS_CLI_VERSION} --pip-args='--no-cache-dir'"
 
 ### Install Terraform CLI
