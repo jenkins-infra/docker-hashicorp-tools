@@ -64,7 +64,7 @@ RUN su - jenkins -c "pipx install awscli==${AWS_CLI_VERSION} --pip-args='--no-ca
 # For instance: "
 # TERRAFORM_VERSION=X.YY.Z
 # curl -sSL https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_SHA256SUMS | grep linux_amd64
-ARG TERRAFORM_VERSION=1.6.6
+ARG TERRAFORM_VERSION=1.1.9
 RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
   && unzip /tmp/terraform.zip -d /usr/local/bin \
