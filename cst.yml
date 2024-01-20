@@ -20,7 +20,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.azure-cli.version
       value: 2.56.0
     - key: io.jenkins-infra.tools.doctl.version
-      value: 1.102.0
+      value: 1.103.0
     - key: io.jenkins-infra.tools.trivy.version
       value: 0.48.2
     - key: io.jenkins-infra.tools.jq.version
